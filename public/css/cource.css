@@ -1,0 +1,124 @@
+.courses {
+    text-align: center;
+    box-sizing: border-box;
+    height: 337px;
+    fill: #F17202;
+    flex-shrink: 0;
+    padding: 20px;
+    background-color: rgba(255, 61, 8, 0.04);
+    margin-top: 100px;
+}
+
+.courses h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.courses .subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.courses .description {
+    font-size: 1rem;
+    color: #999;
+    margin-bottom: 20px;
+}
+
+.section-two {
+
+    width: 100%;
+    height: 810px;
+    background: #FFF;
+}
+
+.section-two .title {
+    padding: 50px 0;
+    color: #010101;
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    font-weight: bold;
+    text-align: center;
+}
+
+.section-two .course-container {
+    width: 1074px;
+    height: 354.944px;
+    margin: 0 auto;
+}
+
+.section-two .course-container .inner-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.section-two .course-container .inner-wrap .course-card {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+
+
+    width: 252px;
+    height: 354.944px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    border: 0.5px solid #F2F2F2;
+
+    background: #FFF;
+
+    box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.04);
+}
+
+.section-two .course-container .inner-wrap .course-card img {
+
+    width: 90%;
+    height: 202px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    margin-bottom: 26px;
+}
+
+.section-two .course-container .inner-wrap .course-card h3 {
+    width: 211px;
+    height: 57.207px;
+    flex-shrink: 0;
+    color: #292C3F;
+
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+
+}
+
+.section-two .course-container .inner-wrap .course-card p {
+    width: 115px;
+    height: 23.403px;
+    flex-shrink: 0;
+    color: #717171;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  h1 {
+    animation: bounce 1s infinite;
+  }
+  

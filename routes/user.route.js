@@ -3,6 +3,7 @@ import {
     getLogin, postLogin, getRegister, postRegister, getLogout, getHome
 } from '../controller/user.controller.js';
 import { auth } from '../middleware/auth.js';
+import { getcourse} from '../controller/cource.controller.js';
 
 const router = express.Router();
 
@@ -13,4 +14,5 @@ router.get('/register', getRegister);
 router.post('/register', postRegister);
 router.get('/logout', getLogout);
 router.get('/', auth, getHome);
+router.get('/course', getcourse);
 export default router;
