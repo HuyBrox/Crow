@@ -73,21 +73,22 @@ const handleChatMessage = (socket, { receiverId, message, senderId }) => {
         io.to(socketId).emit("newMessage", { senderId, message, timestamp: new Date() });
     });
 };
-
-// Xử lý phản hồi cuộc gọi
-const handleCallResponse = (socket, { callerId, receiverId, accepted }) => {
-    const callerSockets = getReciverSocketIds(callerId);
-    callerSockets.forEach(socketId => {
-        io.to(socketId).emit("callResponse", { receiverId, accepted });
-    });
-
-    if (accepted) {
-        socket.join(`call_${callerId}_${receiverId}`);
-        console.log(`📞 Người nhận (${receiverId}) đã tham gia phòng call_${callerId}_${receiverId}`);
+//gửi peerID server nhận được từ client cho người nhận
+const sendPeerId = (socket, { receiverId, callerId, peerId }) => {
+    const receiverSockets = getReciverSocketIds(receiverId);
+    if (receiverSockets.length > 0) {
+        receiverSockets.forEach(socketId => {
+            io.to(socketId).emit("receivePeerId", {
+                callerId,
+                peerId
+            });
+        });
+        console.log(`Đã gửi peerId (${peerId}) cho người nhận (${receiverId})`);
     } else {
-        console.log(`❌ Người nhận (${receiverId}) đã từ chối cuộc gọi.`);
+        socket.emit("callError", { message: "Người nhận không trực tuyến." });
     }
 };
+
 
 // Xử lý notification
 const handleNotification = (socket, { receiverId, notification }) => {
@@ -110,36 +111,10 @@ io.on("connection", (socket) => {
     handleUserConnection(socket, userId);
 
     socket.on("sendMessage", (data) => handleChatMessage(socket, data));
-    socket.on("respondToCall", (data) => handleCallResponse(socket, data));
+
     socket.on("sendNotification", (data) => handleNotification(socket, data));
-
-    // WebRTC - gửi offer
-    socket.on("sendOffer", async (data) => {
-        const receiverSockets = getReciverSocketIds(data.receiverId);
-        if (receiverSockets.length > 0) {
-            receiverSockets.forEach(socketId => {
-                io.to(socketId).emit("receiveOffer", { callerId: data.callerId, offer: data.offer });
-            });
-        } else {
-            socket.emit("callError", { message: "Người nhận không trực tuyến." });
-        }
-    });
-
-    // WebRTC - gửi answer
-    socket.on("sendAnswer", async (data) => {
-        const callerSockets = getReciverSocketIds(data.callerId);
-        callerSockets.forEach(socketId => {
-            io.to(socketId).emit("receiveAnswer", { receiverId: data.receiverId, answer: data.answer });
-        });
-    });
-
-    // WebRTC - gửi Ice Candidate
-    socket.on("sendIceCandidate", async (data) => {
-        const targetSockets = getReciverSocketIds(data.targetId);
-        targetSockets.forEach(socketId => {
-            io.to(socketId).emit("receiveIceCandidate", { candidate: data.candidate });
-        });
-    });
+    //gửi peerID server nhận được từ client cho người nhận
+    socket.on("sendPeerId", (data) => sendPeerId(socket, data));
 
     socket.on("disconnect", () => {
         handleUserDisconnection(socket, userId);

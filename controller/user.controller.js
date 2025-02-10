@@ -1,6 +1,7 @@
 import User from '../models/user.model.js';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { getReciverSocketIds, io } from "../socket/socket.js";
 
 // import getDatUri from "../utils/datauri.js";
 // import cloudinary from "../utils/cloudinary.js";
@@ -144,8 +145,20 @@ export const getLogout = async (req, res) => {
     }
 };
 //home
-export const getHome = (req, res) => {
+export const getHome = async (req, res) => {
+    if (res.locals.user) {
+        const allUsers = await User.find({ _id: { $ne: res.locals.user._id } }).select('-password');
+        res.render('./page/home/home', {
+            title: 'Trang chủ',
+            allUsers: allUsers,
+        });
+        return;
+    }
     res.render('./page/home/home', {
         title: 'Trang chủ',
     });
+
+
+
+
 };
