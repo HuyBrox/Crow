@@ -1,13 +1,187 @@
 extends ../../layout/default.pug
 include ../../mixin/alert.pug
-include ../../mixin/list_person.pug
+block style
+    link(rel="stylesheet" href="./css/home.css")
 block main
-    .container
         +alert-success(5000)
         +alert-error(5000)
+        div.section-all
+            //section one//
+            div.section-one
+                div.container
+                    div.inner-wrap
+                        div.inner-content
+                            div.inner-list
+                                div
+                                    p 50% OFF  
+                                P Học từ Hôm nay
+                            h1.inner-title
+                                p.td1 Ngôn ngữ là 
+                                span.highlight chìa khóa
+                                p.td2 mở ra tương lai
+                            p.inner-desc
+                                p Chúng tôi cung cấp các khóa học phù hợp với mục tiêu
+                                |và sở thích của bạn.
+                            div.inner-list-2
+                                button.btn Học tập
+                                img(src="./img/img-home/buttonvideo.svg", alt="Học tập Image", width="45", height="45") 
+                        div.inner-image
+                            div.number-lesson
+                                img(src="./img/img-home/elip.svg", alt="Học tập Image", width="50.311px", height="48px")
+                                p.inner-lesson
+                                |100+
+                                br
+                                |Bài Giảng
+                            div.rectangle
+                            div.elip-1
+                                div.elip-2
+                                    div.elip-3
+                                        img(src="./img/img-home/image-try.png", alt="Học tập Image", width="343.793px", height="313px")
+        
+            //end section one //
+            //section two //
+            div.section-two
+                h2.title Một số khóa học phổ biến
+                div.course-container
+                    div.inner-wrap
+                        div.course-card
+                            img(src="./img/img-home/course-1.png" alt="30 ngày học tiếng Anh")
+                            h3 30 ngày học tiếng Anh cho người mới bắt đầu
+                            div.hpp
+                                p 📚 1500 Lượt học 
+                                p ⭐⭐⭐⭐⭐
+                        div.course-card
+                            img(src="./img/img-home/course-2.png" alt="30 ngày học tiếng Anh")
+                            h3 30 ngày học tiếng Anh cho người mới bắt đầu
+                            div.hpp
+                                p 📚 1500 Lượt học 
+                                p ⭐⭐⭐⭐⭐
+                        div.course-card
+                            img(src="./img/img-home/course-3.png" alt="30 ngày học tiếng Anh")
+                            h3 30 ngày học tiếng Anh cho người mới bắt đầu
+                            div.hpp 
+                                p 📚 1500 Lượt học 
+                                p ⭐⭐⭐⭐⭐
+                        div.course-card
+                            img(src="./img/img-home/course-4.png" alt="30 ngày học tiếng Anh")
+                            h3 30 ngày học tiếng Anh cho người mới bắt đầu
+                            div.hpp
+                                p 📚 1500 Lượt học 
+                                p ⭐⭐⭐⭐⭐
+            //end section two //
+            // section three //
+            div.section-three
+                div.background-tool
+                    h2.title Ôn Luyện Đa Dạng
+                    div.icon-rain
+                        img(src="./img/img-home/rain.svg")
+                    div.container 
+                        div.inner-wrap
+                            div.grid-item
+                                img(src="./img/img-home/pencil.png" alt="Trắc nghiệm") 
+                                p Trắc nghiệm
+                            div.grid-item 
+                                img(src="./img/img-home/science.png" alt="Trả lời ngắn") 
+                                p Trả lời ngắn
+                            div.grid-item 
+                                img(src="./img/img-home/tech.png" alt="Điền từ") 
+                                p Điền từ
+                            div.grid-item 
+                                img(src="./img/img-home/med.svg" alt="Mini game") 
+                                p Mini game
+                            div.grid-item 
+                                img(src="./img/img-home/math.svg" alt="Sắp xếp hội thoại") 
+                                p Sắp xếp hội thoại
+                            div.grid-item 
+                                img(src="./img/img-home/food-delivery.png" alt="Hình ảnh") 
+                                p Hình ảnh
+                            div.grid-item 
+                                img(src="./img/img-home/graduating-student.png" alt="Thẻ học tập") 
+                                p Thẻ học tập
+                            div.grid-item 
+                                img(src="./img/img-home/art-book.svg" alt="Luyện nghe") 
+                                p Luyện nghe
+            // end section three //
 
-        h1.text-center(style="margin-top: 100px") Home page
-        +list_person(allUsers)
+            // section four //
+            div.section-four
+                h2.title Nhu cầu đa dạng , phong phú đáp ứng mọi vần đề
+                div.container
+                    div.inner-wrap
+                        div.inner-block-item
+                            div.inner-image(style="background: #A6CF4A;")
+                                img(src="./img/img-home/pen.png", alt="")
+                            h3.inner-title Từ vựng 
+                            p.inner-desc Từ vựng phong phú và đa dạng 
+                                        |với hơn 170.000+ từ vựng
+                        div.inner-block-item
+                            div.inner-image(style="background: #A6CF4A;")
+                                img(src="./img/img-home/pen.png", alt="")
+                            h3.inner-title Từ vựng 
+                            p.inner-desc Từ vựng phong phú và đa dạng 
+                                        |với hơn 170.000+ từ vựng
+                        div.inner-block-item
+                            div.inner-image(style="background: #A6CF4A;")
+                                img(src="./img/img-home/pen.png", alt="")
+                            h3.inner-title Từ vựng 
+                            p.inner-desc Từ vựng phong phú và đa dạng 
+                                        |với hơn 170.000+ từ vựng
+                        div.inner-block-item
+                            div.inner-image(style="background: #A6CF4A;")
+                                img(src="./img/img-home/pen.png", alt="")
+                            h3.inner-title Từ vựng 
+                            p.inner-desc Từ vựng phong phú và đa dạng 
+                                        |với hơn 170.000+ từ vựng
+            // end section four //
+            //  section five //  
+            div.section-five
+                h2.title Nhu cầu đa dạng , phong phú đáp ứng mọi vần đề
+                div.container
+                    div.inner-wrap
+                        div.inner-block-item
+                            img(src="./img/img-home/online-class.png", alt="")
+                            div.month
+                                p.inner-desc 🔥 16 Tháng 2
+                                h3.inner-title Học Tiếng Anh Qua Phim Ảnh và Bài Hát
+                        div.inner-block-item
+                            img(src="./img/img-home/online-class.png", alt="")
+                            div.month
+                                p.inner-desc 🔥 16 Tháng 2
+                                h3.inner-title Học Tiếng Anh Qua Phim Ảnh và Bài Hát
+                        div.inner-block-item
+                            img(src="./img/img-home/online-class.png", alt="")
+                            div.month
+                                p.inner-desc 🔥 16 Tháng 2
+                                h3.inner-title Học Tiếng Anh Qua Phim Ảnh và Bài Hát
+                        div.inner-block-item
+                            img(src="./img/img-home/online-class.png", alt="")
+                            div.month
+                                p.inner-desc 🔥 16 Tháng 2
+                                h3.inner-title Học Tiếng Anh Qua Phim Ảnh và Bài Hát
+            //  end section five //
 
-        p.text-center(style="margin-bottom: 100px") This is a test page
-        p Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa, eveniet pariatur aut minima et dolorum, iure quo sint itaque dignissimos a quas accusantium porro ratione nihil animi necessitatibus cumque ullam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere esse repellendus dolorem quisquam ducimus iure eos voluptatum cupiditate sequi explicabo quod, tempora deleniti earum nesciunt ipsa quasi facilis dicta reiciendis voluptate, tenetur officiis at consectetur! Eius, voluptatem natus molestiae non neque earum animi numquam, consequatur id modi optio, quia magni. Omnis odit, quidem quia veniam minus dolor autem a enim repudiandae laborum veritatis ab modi est cupiditate numquam quaerat praesentium molestiae ratione perspiciatis labore? Doloremque, provident repudiandae dicta a aspernatur, culpa veritatis necessitatibus pariatur eius quo, rem corrupti ab odio sint vero ad. Saepe in accusamus molestiae minus aut, corrupti quae vel quia numquam similique. Quas eaque accusantium esse ratione consequuntur sequi sit similique rerum vero eos natus quidem magni beatae dolorum nostrum asperiores harum animi unde nihil repudiandae quod, reiciendis maiores earum. Ipsum, eius dolorem perspiciatis odio laborum illo modi quia tempore magnam. Veritatis, obcaecati enim harum provident voluptatum autem ratione amet, laborum ea voluptatem quod quis id ullam eos maxime ipsam dolor repudiandae, blanditiis cumque deserunt exercitationem aperiam. Ut, explicabo reiciendis. Praesentium quam neque totam sed molestiae maiores, odit aspernatur fuga ad repellat ab dignissimos ipsa minus adipisci reiciendis consectetur maxime? Ipsa, debitis. Ad, corrupti quae quidem laudantium minima architecto vero voluptatem quas animi nemo beatae? Pariatur aliquid officia ad in sed cumque necessitatibus quidem id repellendus. Culpa non reprehenderit hic voluptatum consectetur facere sunt obcaecati suscipit. Expedita, beatae non nesciunt suscipit excepturi laboriosam voluptates voluptate accusamus, iure aut deserunt consectetur et a? Praesentium assumenda id blanditiis cumque a labore perspiciatis laborum vero molestias placeat provident obcaecati dolorem quos possimus porro odit nesciunt, eius voluptas dolor veritatis voluptatibus. Ipsa tempore mollitia, illum eaque maxime nisi corporis numquam dicta praesentium ab vel ipsum commodi quod quas voluptatibus quidem voluptas maiores harum! Ipsa amet magni iste consectetur nisi error tempore tenetur non facilis eaque maiores molestias adipisci optio, doloribus officia aspernatur quo distinctio enim quidem nihil debitis consequatur sed nam. Esse dolores, maiores quo earum illum iste quisquam aliquam quasi dolor, molestias velit assumenda debitis voluptatibus alias sint tempore cumque deleniti reiciendis omnis, rem minus! Quo sequi esse iusto voluptate error aspernatur provident. Nemo maiores earum quia tenetur nostrum qui neque, fugiat optio autem facilis assumenda maxime ex, quas atque quod cupiditate rem repellendus laudantium cumque. Aliquid minima debitis temporibus a, earum natus, est eum voluptatem quisquam, error mollitia excepturi amet neque repudiandae itaque obcaecati ipsam laboriosam pariatur? Quisquam voluptatem atque, laboriosam accusantium, natus ex minima eaque blanditiis consequuntur deleniti, quam nulla nisi ad. Autem, eveniet. Veritatis incidunt quod odio repudiandae quos voluptates animi, distinctio provident voluptate vero culpa laborum et veniam rem accusamus totam velit omnis quas alias ipsa rerum adipisci delectus? Voluptates provident, totam numquam nam animi impedit ipsa fuga eligendi facere et repellendus quibusdam ipsam cum beatae voluptate, unde ab dolore molestiae eveniet, saepe non nostrum error libero? Neque accusamus reiciendis dolor debitis! Dolore aut molestiae optio sed ipsum nesciunt! Libero voluptas, est magni aut, ea obcaecati animi exercitationem tempora maiores laborum alias repellendus delectus nisi quo velit soluta sunt fuga iure voluptate. Odio distinctio animi quia nesciunt nisi quaerat corrupti amet, tempore soluta cumque, delectus quasi tenetur molestias quo ipsum optio! Atque sapiente laudantium in voluptates incidunt aliquam sint dolorum commodi iure architecto? Quibusdam a error fugit at aliquam quidem eaque voluptatibus consequatur nam? Dicta consequatur commodi ipsa nulla, qui aspernatur excepturi perferendis totam, esse omnis temporibus, perspiciatis dolore magni cupiditate enim sit. Ut culpa corrupti enim, voluptas reiciendis sint quisquam impedit optio minima suscipit natus obcaecati, explicabo accusantium illo similique vel praesentium distinctio quidem eligendi alias animi sapiente debitis! Repellendus reprehenderit iure unde neque? Aut ullam voluptates nesciunt illo velit qui? Minima, unde? Debitis quae similique aliquid, iste omnis, unde sunt fugiat rem consequatur cupiditate dicta quaerat quam optio impedit nemo voluptatem ut explicabo adipisci voluptas sapiente nostrum. Amet minima consectetur quasi ad, atque ratione sint aperiam rem aliquam maiores pariatur debitis, numquam ea, explicabo fuga culpa quae voluptates adipisci quisquam necessitatibus. Facilis doloribus, nisi laborum quis neque eius labore ad laudantium eum, repudiandae dolor deserunt rerum assumenda quaerat eligendi corporis perspiciatis vero, adipisci sapiente? Nisi eligendi, omnis quasi sit id asperiores sunt ad unde eum consectetur cumque accusantium laborum aliquam aliquid rem, quos odio doloremque tempora sapiente, optio sequi ab incidunt. Perferendis sequi cupiditate delectus magni reprehenderit aut sit dicta laboriosam incidunt voluptas soluta quis, magnam iusto, quidem similique consectetur quisquam, culpa blanditiis tempore dolores mollitia facere. Corporis fugit neque debitis ullam culpa illum temporibus ea tenetur id quos autem quam sunt, quo iusto iste quibusdam corrupti! Saepe, rerum quis, consectetur laborum aperiam laboriosam delectus repellat quia quisquam obcaecati dolores similique fuga recusandae tempora cum eligendi! Expedita obcaecati eius eligendi dicta error at quisquam ex? Iste, earum asperiores. Error, laboriosam. Aliquam aperiam hic commodi, optio, mollitia laborum veniam voluptates vero itaque cumque nulla qui temporibus fugiat eos et cupiditate odio quam iusto quos eius deserunt architecto laboriosam accusamus! Consectetur mollitia voluptatem molestias est iusto minus inventore reiciendis nostrum tempora? Sapiente culpa similique, ipsa architecto hic fuga vero nam necessitatibus doloremque possimus rem doloribus ad alias dolores et maiores animi placeat nesciunt quis quam impedit. Placeat et commodi repellendus consequuntur ex cum numquam! Eveniet quisquam magni quaerat ea cumque ex, id mollitia commodi nobis delectus voluptates perferendis earum debitis at! Quae itaque nam ratione dolorem, fugit veritatis. Quia numquam nam eveniet quos modi velit eos repudiandae, quaerat similique sed odio sunt error nesciunt? Ipsam error et laudantium sequi, eligendi est facere earum nobis asperiores rerum minima cupiditate neque voluptatem, repudiandae, quos delectus hic? Dignissimos exercitationem quidem similique praesentium incidunt impedit dolore sapiente inventore architecto facilis! Ex delectus vitae qui totam soluta quisquam sint officia, quos sequi autem sit placeat tempora quis sunt iure eaque iusto, corrupti dolore nesciunt voluptates blanditiis doloribus. Labore, asperiores, minima, libero ut corporis blanditiis eos quo praesentium accusantium molestias est. Magnam aperiam molestias impedit atque cum, beatae adipisci distinctio dicta, ea porro aut quia numquam expedita iste. Earum, expedita magnam repudiandae veritatis eligendi aperiam iusto debitis possimus fugit, incidunt dolores alias!
+            // section six 
+            div.section-six
+                h2.title Mọi người nói gì về trang web 
+                div.container-pagesix
+                    dev.inner-wrap
+                        dev.inner-image
+                            dev.background
+                                img(src="./img/img-home/course-2.png" alt="30 ngày học tiếng Anh")
+                        dev.inner-content
+                            img(src="./img/img-home/icon-ngacD.svg", alt="")
+                            br
+                            dev.icon
+                                img(src="./img/img-home/star.svg", alt="")
+                                img(src="./img/img-home/star.svg", alt="")
+                                img(src="./img/img-home/star.svg", alt="")
+                                img(src="./img/img-home/star.svg", alt="")
+                                img(src="./img/img-home/star.svg", alt="")
+                            p.content Học với Crow đã giúp tôi đạt được mục tiêu thi chứng chỉ ngoại ngữ trong thời gian ngắn. Tôi rất biết ơn đội ngũ phát triển trang web này!
+                            h3 Ly Ly
+                            p  Ca sĩ 
+
+
+
+
+            // end section six
