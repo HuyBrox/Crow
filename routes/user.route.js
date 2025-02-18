@@ -3,7 +3,8 @@ import {
     getLogin, postLogin, getRegister, postRegister, getLogout, getHome
 } from '../controller/user.controller.js';
 import { auth } from '../middleware/auth.js';
-import { getcourse} from '../controller/cource.controller.js';
+import { getcourse} from '../controller/course.controller.js';
+import { getflashcards } from '../controller/flashcards.controller.js';
 
 const router = express.Router();
 
@@ -15,4 +16,5 @@ router.post('/register', postRegister);
 router.get('/logout', getLogout);
 router.get('/', auth, getHome);
 router.get('/course', getcourse);
+router.get('/flashcards', getflashcards);
 export default router;
