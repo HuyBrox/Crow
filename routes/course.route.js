@@ -7,5 +7,4 @@ const router = express.Router();
 
 router.get('/course', auth, coursePage);
 
-
 export default router;
