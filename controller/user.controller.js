@@ -1,6 +1,8 @@
 import User from '../models/user.model.js';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Course from '../models/course.model.js';
+import Lesson from '../models/lesson.model.js';
 import { getReciverSocketIds, io } from "../socket/socket.js";
 
 // import getDatUri from "../utils/datauri.js";
@@ -162,3 +164,47 @@ export const getHome = async (req, res) => {
 
 
 };
+
+
+export const addCourses = async (req, res) => {
+    try {
+        // const user = res.locals.user;  // Lấy người dùng hiện tại
+        // // Tạo khóa học mới với tên duy nhất
+        // const khoaHoc = await Course.create({
+        //     name: 'Khoa hoc ' + Date.now(),  // Thêm thời gian vào tên khóa học để đảm bảo tính duy nhất
+        //     instructor: user._id,   // Giảng viên là user hiện tại
+        //     language: 'Vietnamese',
+        //     description: 'Mô tả khóa học',
+        //     price: 200000
+        // });
+        // console.log('khoaHoc:', khoaHoc);
+
+        // // Tạo 30 bài học và thêm vào khóa học
+        // for (let i = 1; i <= 30; i++) {
+        //     const baiHoc = await Lesson.create({
+        //         title: `Bai hoc ${i}`,    // Tiêu đề bài học
+        //         type: i % 2 === 0 ? 'video' : 'task',   // Giả sử bài học video và bài tập xen kẽ
+        //         content: `Nội dung của bài học ${i}`,
+        //         videoUrl: i % 2 === 0 ? `https://video.com/bai-hoc-${i}` : null,  // URL video cho bài học video
+        //         jsonTask: i % 2 !== 0 ? `{"task": "Mô tả bài tập ${i}"}` : null  // JSON task cho bài học bài tập
+        //     });
+
+        //     // Thêm bài học vào mảng lessons của khóa học
+        //     khoaHoc.lessons.push(baiHoc._id);
+        // }
+
+        // // Lưu lại khóa học với các bài học đã được thêm
+        // await khoaHoc.save();
+        const x = await Course.findOne({ name: 'Khoa hoc 1739866050679' }).populate('lessons');
+        console.log('x:', x);
+        req.flash('success', 'Khóa học đã được thêm thành công!');
+        res.redirect('/');
+    } catch (error) {
+        console.error('Error during addCourses:', error);
+        req.flash('error', 'Đã xảy ra lỗi trong quá trình thêm khóa học.');
+        res.redirect('/');
+    }
+};
+
+
+

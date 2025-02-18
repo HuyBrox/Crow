@@ -11,5 +11,6 @@ mixin list_person(list_person)
                         p.offline Offline
                 if val._id != user.id
                     button.call-button(type="button" data-receiver-id=val._id) Gọi Video
+                    button.chat-button(type="button" data-receiver-id=val._id) Chat
     else
         p Bạn chưa đăng nhập

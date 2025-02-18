@@ -1,4 +1,8 @@
 extends ../../layout/default.pug
+block script
+    script(src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js")
+    script(src="/js/socket_client.js")
+    script(src="/js/call/call_controls.js")
 block style
     link(rel="stylesheet" href="/css/call.css")
 block main
@@ -10,7 +14,3 @@ block main
             button#toggleMic 🔇 Tắt Mic
             button#toggleVideo 📹 Tắt Video
             button#endCall ❌ Kết thúc
-block script
-    script(src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js")
-    script(src="/js/socket_client.js")
-    script(src="/js/call/call_controls.js")

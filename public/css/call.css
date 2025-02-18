@@ -65,7 +65,7 @@ video {
   border-radius: 10px; /* Bo góc */
   border: 3px solid transparent;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-
+  transform: scaleX(-1);
   /* Viền gradient */
   background: linear-gradient(white, white) padding-box,
     linear-gradient(
