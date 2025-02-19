@@ -165,10 +165,6 @@ export const getprofile = (req, res) => {
         title: 'Trang cá nhân',
     });
 };
-<<<<<<< Updated upstream
-=======
-
-
 
 
 // Hiển thị trang giới thiệu
@@ -232,4 +228,3 @@ export const getAbout = async (req, res) => {
     }
 };
 
->>>>>>> Stashed changes
