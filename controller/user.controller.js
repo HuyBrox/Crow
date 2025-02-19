@@ -2,7 +2,8 @@ import User from '../models/user.model.js';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { getReciverSocketIds, io } from "../socket/socket.js";
-
+import Post from '../models/post.model.js';
+import Comment from '../models/comment.model.js';
 // import getDatUri from "../utils/datauri.js";
 // import cloudinary from "../utils/cloudinary.js";
 
@@ -164,3 +165,71 @@ export const getprofile = (req, res) => {
         title: 'Trang cá nhân',
     });
 };
+<<<<<<< Updated upstream
+=======
+
+
+
+
+// Hiển thị trang giới thiệu
+export const getAbout = async (req, res) => {
+    try {
+        // const user = res.locals.user; // Lấy người dùng hiện tại
+
+        // // Kiểm tra nếu người dùng không tồn tại
+        // if (!user) {
+        //     req.flash('error', 'Người dùng không xác định.');
+        //     return res.redirect('/');
+        // }
+
+        // // Xóa toàn bộ bài viết và bình luận trước khi tạo mới
+        // await Post.deleteMany({});
+        // await Comment.deleteMany({});
+
+        // let posts = [];
+
+        // // Tạo 30 bài viết mới
+        // for (let i = 1; i <= 30; i++) {
+        //     const post = new Post({
+        //         caption: `Bài viết số ${i}`,
+        //         img: "https://photo2.tinhte.vn/data/attachment-files/2025/02/8634844_Screenshot_2025-02-08_at_12.45.13.png",
+        //         author: user._id,
+        //         desc: `Nội dung của bài viết số ${i}`,
+        //         likes: [user._id],
+        //     });
+
+        //     await post.save(); // Lưu bài viết vào DB
+
+        //     let comments = [];
+
+        //     // Thêm 5 bình luận cho mỗi bài viết
+        //     for (let j = 1; j <= 5; j++) {
+        //         const comment = new Comment({
+        //             text: `Bình luận số ${j} của bài viết số ${i}`,
+        //             author: user._id,
+        //             post: post._id,
+        //         });
+
+        //         await comment.save(); // Lưu comment vào DB
+        //         comments.push(comment._id);
+        //     }
+
+        //     // Cập nhật danh sách comment vào bài viết
+        //     post.comments = comments;
+        //     await post.save();
+
+        //     posts.push(post);
+        // }
+
+        // console.log("Đã tạo 30 bài viết và thêm bình luận thành công!");
+
+        res.render("./page/gioithieu/index", {
+            title: "Giới thiệu",
+        });
+    } catch (error) {
+        console.error("Lỗi khi tạo bài viết:", error);
+        res.status(500).send("Lỗi server");
+    }
+};
+
+>>>>>>> Stashed changes
