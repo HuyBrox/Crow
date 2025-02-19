@@ -1,0 +1,205 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 20px;
+    height: 1450px;
+    margin-top: 100px;
+    
+  }
+  
+  /* Profile Section */
+  .profile {
+    display: right;
+    gap : 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    margin-bottom: 30px;
+     /* Để phần tử giả có thể định vị tương đối */
+  }
+  
+  .profile-avatar {
+    position: relative; /* Để phần tử giả có thể định vị tương đối */
+    z-index: 1; /* Đảm bảo avatar nằm trên khung màu cam */
+    margin-top: 100px;
+    margin-bottom: 25px
+  }
+  
+  .profile-avatar::before {
+    content: '';
+    position: absolute;
+    top: -180px; /* Điều chỉnh vị trí khung so với avatar */
+    left: -10px; /* Điều chỉnh vị trí khung so với avatar */
+    width: 1380px; /* Kích thước khung lớn hơn avatar */
+    height:230px; /* Kích thước khung lớn hơn avatar */
+    background-color: #F17202; 
+    border-radius: 10px; /* Bo góc khung */
+    z-index: -10; /* Đặt khung phía sau avatar */
+  }
+  
+  .profile-avatar img {
+    width: 145px;
+    height: 130px;
+    border-radius: 50%;
+    border: 3px solid #F17202;
+  }
+  
+  .profile-info {
+    margin-left: 20px;
+  }
+  
+  .profile-info h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .profile-info p {
+    margin: 20px 0;
+    font-size: 16px;
+  }
+  .profile .profile-info .profile-flag  {
+    display: flex;
+    align-items: center;
+    justify-self: space-between;
+    gap: 10px;
+  }
+  
+  .profile-flag img{
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0; 
+  }
+  
+  /* Profile Stats */
+  .profile-stats {
+    display: flex;
+    justify-content: space-around;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    background: rgb(210, 208, 201);
+    box-shadow: 12px 20px 6px rgba(88, 82, 82, 0.1); /* Thêm bóng đổ */
+    margin-right: 70%;
+  }
+  
+  .stat {
+    text-align: center;
+    padding: 15px;
+    background: #e9eaec;
+    color: black;
+    border-radius: 20px;
+    width: 120px; 
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Điều chỉnh bóng đổ */
+  }
+  
+  .stat-title {
+    font-size: 16px; 
+    color: #666;
+    margin: 0;
+  }
+  
+  .stat-value {
+    font-size: 22px; 
+    color: #F17202;
+    margin: 5px 0;
+  }
+  
+  /* Activity Section */
+  .activity {
+    background: rgb(210, 208, 201);
+    padding: 20px; /* Giảm padding */
+    width: 60%;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    margin: -72px 0;
+    box-shadow: 19px 20px 6px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ */
+    margin-left: 31%;
+    position:absolute;
+    bottom: 57px;
+    right: 65px;
+    height: 18%;
+  }
+  .activity h3 {
+    color: #F17202;
+    margin-top: 5px;
+    margin-bottom: 20px; /* Giảm margin-bottom */
+    font-size: 20px; 
+  }
+  
+  .no-activity {
+    color: #666;
+    text-align: center;
+    font-size: 16px;
+  }
+  
+  /* Courses Section */
+  .courses {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .courses h3 {
+    color: #F17202;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .course-list {
+    display: flex;
+    flex-direction: column; /* Sắp xếp các khóa học theo chiều dọc */
+    gap: 20px;
+    overflow-y: auto; /* Tạo thanh cuộn dọc khi nội dung vượt quá kích thước */
+    max-height: 500px; /* Giới hạn chiều cao để kích hoạt thanh cuộn */
+    padding-right: 10px; /* Thêm khoảng trống để thanh cuộn không che phủ nội dung */
+  }
+  
+  .course {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    gap: 15px;
+    width: 100%; /* Chiều rộng đầy đủ */
+  }
+  
+  .course-image img {
+    width: 120px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 25%;
+  }
+  
+  .course-info {
+    padding: 25px;
+  }
+  
+  .course-info h4 {
+    margin: 0;
+    color: #F17202;
+    font-size: 18px;
+  }
+  
+  .course-info p {
+    margin: 5px 0;
+    color: #666;
+  }
