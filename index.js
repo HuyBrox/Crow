@@ -35,8 +35,6 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(flash());
-app.use(express.json());
-
 
 // Kết nối MongoDB
 await connectDB();
