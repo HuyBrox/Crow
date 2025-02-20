@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeerJS Video Call</title>
+    <script src="https://unpkg.com/peerjs@1.0.2/dist/peerjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.4.7/dist/peerjs.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #f0f2f5;
+            font-family: Arial, sans-serif;
+        }
+
+        .video-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        video {
+            width: 300px;
+            height: 200px;
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>PeerJS Video Call</h2>
+    <p>ID của bạn: <span id="my-id">...</span></p>
+    <input type="text" id="peer-id" placeholder="Nhập ID của người kia">
+    <button onclick="callPeer()">Gọi</button>
+    <div class="video-container">
+        <video id="localVideo" autoplay muted></video>
+        <video id="remoteVideo" autoplay></video>
+    </div>
+    <script>
+        const peer = new Peer(undefined, {
+            host: 'localhost',
+            port: 5000,
+            path: '/peerjs',
+            debug: 3,
+        });
+        //log peer id
+        console.log(peer.id);
+        //peer on là để lắng nghe sự kiện open của peer. có nghĩa là bật peer lên và sẽ tạo ra một object peer trong đó có id của peer
+        peer.on('open', id => {
+            document.getElementById('my-id').innerText = id;
+        });
+
+        peer.on('error', err => {
+            console.error('PeerJS error:', err);
+        });
+
+        let localStream;
+        async function getMedia() {
+            localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            document.getElementById('localVideo').srcObject = localStream;
+        }
+        getMedia();
+
+        //đoạn này đẻ nhận cuộc gọi call.on là để lắng nghe sự kiện stream từ người gọi
+        peer.on('call', call => {
+            call.answer(localStream);
+            call.on('stream', remoteStream => {
+                document.getElementById('remoteVideo').srcObject = remoteStream;
+            });
+        });
+
+        function callPeer() {
+            const peerId = document.getElementById('peer-id').value;
+            if (!peerId) return alert("Nhập ID của người nhận!");
+            const call = peer.call(peerId, localStream);
+            call.on('stream', remoteStream => {
+                document.getElementById('remoteVideo').srcObject = remoteStream;
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,46 +1,46 @@
-# # # Node.js
-# # node_modules/
-# # npm-debug.log*
-# # yarn-debug.log*
-# # yarn-error.log*
-
-# # Logs
-# logs
-# *.log
-# *.log.*
-# npm-debug.log*
-
-# # Environment variables
-# .env
-
-# # Build output
-# dist/
-# build/
-
-# # Dependency directories
+# # Node.js
 # node_modules/
-# jspm_packages/
+# npm-debug.log*
+# yarn-debug.log*
+# yarn-error.log*
 
-# # Optional npm cache directory
-# .npm
+# Logs
+logs
+*.log
+*.log.*
+npm-debug.log*
 
-# # Optional REPL history
-# .node_repl_history
+# Environment variables
+.env
 
-# # OSX
-# .DS_Store
+# Build output
+dist/
+build/
 
-# # Editor directories and files
-# .idea/
-# .vscode/
-# *.suo
-# *.ntvs*
-# *.njsproj
-# *.sln
+# Dependency directories
+node_modules/
+jspm_packages/
 
-# # Test output
-# coverage/
-# *.lcov
+# Optional npm cache directory
+.npm
 
-# # Misc
-# *.lock
+# Optional REPL history
+.node_repl_history
+
+# OSX
+.DS_Store
+
+# Editor directories and files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Test output
+coverage/
+*.lcov
+
+# Misc
+*.lock
