@@ -1,47 +1,47 @@
 extends ../../layout/default.pug
 include ../../mixin/alert.pug
 
-block style 
-    link(rel="stylesheet" href="./css/flashcards.css")
+block style
+    link(rel="stylesheet" href="./css/flashcard/flashcards.css")
 
-block main 
-    section.flashcards
-        
+block main
+    .container-custom
+        section.flashcards
+
             .content
                 h1 Flashcards
                 p.description Trong suốt thời gian qua, chúng tôi đã nỗ lực định hình cách mọi người tiếp cận đại học, giúp họ không chỉ học hỏi mà còn trưởng thành qua từng trải nghiệm.
-    section.flashcard-categories
-        .parent
-            .card
-                .content
-                        img(src="./img/course-1.png", alt="")
+        section.flashcard-categories
+            .parent
+                .card.course-card
+                    .content
+                        img(src="./img/course-1.png" alt="")
                         h2 Cambridge Vocabulary for IELTS (20 units)
                         p 776 từ
-        .parent
-            .card
-                .content
-                        img(src="./img/course-1.png", alt="")
+            .parent
+                .card.course-card
+                    .content
+                        img(src="./img/course-1.png" alt="")
                         h2 Cambridge Vocabulary for IELTS (20 units)
                         p 76 từ
-        .parent
-            .card
-                .content
-                        img(src="./img/course-1.png", alt="")
+            .parent
+                .card.course-card
+                    .content
+                        img(src="./img/course-1.png" alt="")
                         h2 Cambridge Vocabulary for IELTS (20 units)
                         p 176 từ
-        .parent
-            .card
-                .content
-                        img(src="./img/course-1.png", alt="")
+            .parent
+                .card.course-card
+                    .content
+                        img(src="./img/course-1.png" alt="")
                         h2 Cambridge Vocabulary for IELTS (20 units)
                         p 7426 từ
-        .parent
-            .card
-                .content
-                        img(src="./img/course-1.png", alt="")
+            .parent
+                .card.course-card
+                    .content
+                        img(src="./img/course-1.png" alt="")
                         h2 Cambridge Vocabulary for IELTS (20 units)
                         p 7316 từ
-   
-              
-                    
-        
+
+
+

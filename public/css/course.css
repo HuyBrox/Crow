@@ -77,7 +77,7 @@
 .course-card {
   animation: 2s gradient-angle infinite linear;
   border: 3px solid transparent;
-  background-image: linear-gradient(#fff9ee, #ebd9b5),
+  background-image: linear-gradient(#fff9ee, #f5f1eb),
     conic-gradient(
       from var(--gradient-angle),
       #584827 0%,

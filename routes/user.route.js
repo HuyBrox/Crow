@@ -16,6 +16,5 @@ router.get('/register', getRegister);
 router.post('/register', postRegister);
 router.get('/logout', getLogout);
 router.get('/', auth, getHome);
-router.get('/flashcards', requireAuth, getflashcards);
 router.get('/about', auth, getAbout)
 export default router;

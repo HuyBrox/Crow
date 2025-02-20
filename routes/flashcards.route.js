@@ -1,6 +1,10 @@
 import express from 'express';
-import { getflashcards } from '../controllers/flashcards.controller.js';
+import { getflashcardDetail, getflashcards } from '../controller/flashcards.controller.js';
+import { auth, requireAuth } from '../middleware/auth.js';
 
 const router = express.Router();
-router.get('/flashcards', getflashcards);
+
+router.get('/flashcards', requireAuth, getflashcards);
+router.get('/flashcards/latthe', requireAuth, getflashcardDetail);
+
 export default router;
