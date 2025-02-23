@@ -29,6 +29,7 @@ export const auth = async (req, res, next) => {
         next();
         console.error('Error during authentication:', error);
     }
+
 };
 
 export const requireAuth = async (req, res, next) => {
@@ -50,6 +51,13 @@ export const requireAuth = async (req, res, next) => {
 
         res.locals.user = user;
         next();
+        // sua
+        // if (!req.session.user) {
+        //     // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
+        //     return res.redirect('/login'); 
+        // }
+        // next();
+
     } catch (error) {
         res.clearCookie('token');
         req.flash('error', 'Xác thực không hợp lệ hoặc đã hết hạn, vui lòng đăng nhập lại.');

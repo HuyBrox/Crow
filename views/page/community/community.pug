@@ -1,0 +1,70 @@
+extends ../../layout/default.pug
+include ../../mixin/alert.pug
+block style
+    link(rel="stylesheet" href="./css/community.css")
+block main
+    .container(style = "margin-top : 80px ; ")
+        +alert-success(5000)
+        +alert-error(5000)
+        //Đăng bài viết
+        .block-create-post
+            .user-avatar
+                img(src="./img/Avata.png", alt="User Avatar")
+                input.post-input(placeholder="Bạn đang nghĩ gì thế?" readonly)
+            .post-options
+                .option
+                    img(src=" /img/Live.png", alt="Video trực tiếp")
+                    span Video trực tiếp
+                .option
+                    img(src="./img/TepAnh.png", alt="Ảnh/video")
+                    span Ảnh/video
+                .option
+                    img(src=" /img/Mặtcuoi.png", alt="Cảm xúc/hoạt động")
+                    span Cảm xúc/hoạt động
+
+        // Duyệt qua tất cả bài viết lấy từ database
+        each post in posts
+            .post
+                .post-header
+                    - var postDate = post.createdAt ? new Date(post.createdAt).toLocaleDateString("vi-VN") : "Ngày không hợp lệ";
+                    span.date= postDate
+                    span.separator •
+                    span.read-time 30 phút
+                    a.category(href="") Học Tập
+
+                .post-content
+                    .left
+                        h2= post.caption
+                        p= post.desc
+                        if post.img
+                            .post-image
+                                img(src=post.img, alt="Hình ảnh bài viết")
+
+                    .right
+                        .user-profile
+                            if post.author
+                                img.avatar(src=post.author.avatar, alt="User Avatar")
+                                span.username= post.author.username
+
+                        .likes
+                            button ❤️  
+                            span= (post.likes && post.likes.length) ? post.likes.length : 0
+                            button 💬 
+                            span= (post.comments && post.comments.length) ? post.comments.length : 0
+
+
+                        .comments
+                            if post.comments && post.comments.length
+                                each comment in post.comments
+                                    .comment
+                                        .user-info
+                                            if comment.author
+                                                img.avatar(src=comment.author.avatar, alt="User Avatar")
+                                                span.by by 
+                                                span.username= comment.author.username
+                                                - var commentDate = comment.createdAt ? new Date(comment.createdAt).toLocaleDateString("vi-VN") : "Không xác định";
+                                                span.time / #{commentDate}
+                                        p= comment.text
+                                        button.reply Reply
+                            else
+                                p Chưa có bình luận nào. Hãy là người đầu tiên bình luận!
