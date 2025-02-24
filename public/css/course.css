@@ -1,4 +1,5 @@
 .courses {
+<<<<<<< Updated upstream
     box-sizing: border-box;
     background: #F17202;
     width: 100%;
@@ -47,10 +48,118 @@
 }
 
 .section-all .course-container .wrap .course-card {
+=======
+    text-align: center;
+    box-sizing: border-box;
+    height: 337px;
+    background-color: #F70;
+    flex-shrink: 0;
+    padding: 100px;
+    margin-top: 100px;
+    
+    
+    
+}
+
+@keyframes appear {
+        from {
+            opacity: 0;
+            clip-path: inset(100% 50% 0 0);
+        }
+        to {
+            opacity: 1;
+            /* scale: 1; */
+            clip-path: inset(0 0 0 0);
+        }
+    }
+    .course-card {
+        animation: appear  linear; 
+        animation-timeline: view();
+        animation-range: entry 0% cover 40%;
+    }
+
+
+    
+
+/* button {
+    border: none;
+    background: #0071FF;
+    padding: 0.8em 2.5em;
+    border-radius: 100px;
+    color: white;
+    font-family: Poppins;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 150ms ease;
+}
+
+button:hover {
+    background-color: #16d4ff;
+    scale: 2;
+} */
+
+.courses h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.courses .subtitle {
+    font-size: 1.2rem;
+    color: white;
+    margin-bottom: 5px; 
+}
+
+.courses .description {
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.section-two {
+
+    width: 100%;
+    height: 810px;
+    background: #FFF;
+    
+    
+}
+
+.section-two .title {
+    padding: 50px 0;
+    color: #010101;
+    font-family: Inter;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    font-weight: bold;
+    text-align: center;
+}
+
+.section-two .course-container {
+    width: 1074px;
+    height: 354.944px;
+    margin: 0 auto;
+    
+}
+
+.section-two .course-container .inner-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    
+}
+
+.section-two .course-container .inner-wrap .course-card {
+>>>>>>> Stashed changes
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+<<<<<<< Updated upstream
     width: 252px; /* Chiều rộng cố định */
     height: 273px; /* Chiều cao cố định */
     border-radius: 16px;
@@ -148,3 +257,79 @@
     margin: 0 2px; /* Khoảng cách giữa các sao */
     font-size: 14px; /* Điều chỉnh kích thước */
 }
+=======
+    width: 252px;
+    height: 354.944px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    border: 0.5px solid #F2F2F2;
+    background: #FFF;
+    box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.04);
+    
+    
+    
+}
+.section-two .course-container .inner-wrap .course-card img {
+
+    width: 95%;
+    height: 202px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    margin-bottom: 26px;
+    
+}
+
+.section-two .course-container .inner-wrap .course-card h3 {
+    width: 211px;
+    height: 57.207px;
+    flex-shrink: 0;
+    color: #292C3F;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+    
+
+}
+
+
+.section-two .course-container .inner-wrap .course-card p {
+    width: 115px;
+    height: 23.403px;
+    flex-shrink: 0;
+    color: #717171;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  h1 {
+    animation: bounce 1s infinite;
+  }
+  /* .subtitle {
+    animation: bounce 1s infinite;
+  }
+  .description {
+    animation: bounce 1s infinite;
+  } */
+@keyframes slideInTop{
+    from{
+        transform: translate(-300px);
+    }
+    to{
+        transform: translate(0);
+    }
+   
+} 
+.description{
+        animation-name: slideInTop;
+        animation-duration: 1s;
+    }
+>>>>>>> Stashed changes

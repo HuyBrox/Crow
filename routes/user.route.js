@@ -5,6 +5,10 @@ import {
 import { auth } from '../middleware/auth.js';
 import { getcourse} from '../controller/course.controller.js';
 import { getflashcards } from '../controller/flashcards.controller.js';
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 const router = express.Router();
 
@@ -17,4 +21,8 @@ router.get('/logout', getLogout);
 router.get('/', auth, getHome);
 router.get('/course', getcourse);
 router.get('/flashcards', getflashcards);
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 export default router;
