@@ -1,11 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
 :root {
-  --primary-color: #8e44ad;
-  --background-color: #b8c6db;
-  --secondary-background-color: #f5f7fa;
-  --light-color: #fff;
-  --border-color: #aaa;
+  --primary-color: #e67e22;
 }
-/* Flashcard section */
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
 .container-custom {
   width: 100%;
   max-width: 1400px;
@@ -14,114 +16,173 @@
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  padding: 20px;
-}
-.flashcards {
-  box-sizing: border-box;
-  background: #f17202;
-  width: 100%;
-  height: 337px;
-  padding: 100px 20px;
-  text-align: center;
-}
-.flashcards h1 {
-  color: #fff;
-  font-size: 40px;
-  font-weight: bold;
-  margin-top: 100px;
-}
-.flashcards .description {
-  color: white;
-  font-size: 1.2em;
-  padding: 10px;
-  margin-bottom: 100px;
+  padding: 40px;
 }
 
-/* Flashcard categories */
+.flashcards {
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #e67e22, #f17202);
+  width: 100%;
+  height: 337px;
+  padding: 80px 20px;
+  text-align: center;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.flashcards h1 {
+  color: #fff;
+  font-size: 44px;
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+.flashcards .description {
+  color: white;
+  font-size: 1em;
+  padding: 10px;
+  line-height: 1.5;
+  margin-bottom: 50px;
+}
+
 .flashcard-categories {
-  height: 100%;
-  min-height: 600px;
-  padding: 20px;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(5, 220px);
+  gap: 30px; /* Tăng từ 20px lên 30px */
   justify-content: center;
-  align-items: start;
+  padding: 20px;
   margin-top: 20px;
-  gap: 20px;
 }
 
 .parent {
-  width: 100%;
-  max-width: 180px;
-  height: 250px;
-  margin: 5px;
+  width: 220px;
+  height: 160px; /* Giảm từ 180px xuống 160px */
+  margin: 10px;
 }
 
-.parent .card {
+.card {
   height: 100%;
-  border-radius: 20px;
-  /* background: #ffffff; */
-  transition: all 0.3s ease-in-out;
-  /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
+  width: 100%;
+  border-radius: 20px; /* Tăng từ 12px lên 20px */
+  padding: 20px; /* Tăng từ 15px lên 20px */
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: flex-start;
-  padding: 15px;
 }
 
-.parent .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2);
+.course-card {
+  animation: 4s gradient-angle infinite linear;
+  border: 4px solid transparent; /* Tăng từ 2px lên 4px */
+  background-image: linear-gradient(#fffefd, #ffdeb1),
+    conic-gradient(
+      from var(--gradient-angle),
+      #e67e22 0%,
+      #ff9100 37%,
+      #ffab40 30%,
+      #e67e22 33%,
+      #ff6f00 40%,
+      #ff6f00 50%,
+      #ff9100 77%,
+      #ffab40 80%,
+      #ff9100 83%,
+      #ff6f00 90%
+    );
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.course-card:hover {
+  box-shadow: 0px 8px 20px rgba(230, 126, 34, 0.3);
+  transform: translateY(-5px);
+}
+
+.content {
+  width: 100%;
+  text-align: center;
 }
 
 .content img {
   width: 100%;
-  height: 100px;
+  height: 70px; /* Giảm từ 80px xuống 70px */
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 10px;
 }
 
 .content h2 {
-  font-size: 1em;
+  font-size: 1.1em;
   color: #333;
-  text-align: center;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .content p {
   font-size: 0.9em;
   color: #666;
+  margin-bottom: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-/* animation - huy */
+.content a {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--primary-color);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
+}
+
+.content a:hover {
+  background: #d35400;
+  transform: scale(1.05);
+}
+
+#add-card-set {
+  border: 2px dashed var(--primary-color);
+  background: #fff;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+#add-card-set:hover {
+  box-shadow: 0px 8px 20px rgba(230, 126, 34, 0.3);
+  transform: translateY(-5px);
+}
+
+#add-card-set .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#add-card-set i {
+  font-size: 2.5em;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+#add-card-set h2 {
+  font-size: 1.2em;
+  color: var(--primary-color);
+}
+
+#add-card-set a {
+  margin-top: 10px;
+}
 
 @property --gradient-angle {
   syntax: "<angle>";
   initial-value: 0turn;
   inherits: false;
-}
-.course-card {
-  animation: 2s gradient-angle infinite linear;
-  border: 3px solid transparent;
-  background-image: linear-gradient(#fffefd, #ffdeb1),
-    /* Cam sáng */
-      conic-gradient(
-        from var(--gradient-angle),
-        #e9b994 0%,
-        /* Cam đậm */ #ff9100 37%,
-        /* Cam tươi */ #ffab40 30%,
-        /* Cam sáng */ #c0b7ab 33%,
-        #ff6f00 40%,
-        #ff6f00 50%,
-        #ff9100 77%,
-        #ffab40 80%,
-        #ff9100 83%,
-        #ff6f00 90%
-      );
-  background-clip: padding-box, border-box;
-  background-origin: padding-box, border-box;
 }
 
 @keyframes gradient-angle {
@@ -129,4 +190,37 @@
     --gradient-angle: 1turn;
   }
 }
-/* end animation */
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .flashcard-categories {
+    grid-template-columns: repeat(4, 220px);
+  }
+}
+
+@media (max-width: 992px) {
+  .flashcard-categories {
+    grid-template-columns: repeat(3, 220px);
+  }
+}
+
+@media (max-width: 768px) {
+  .flashcard-categories {
+    grid-template-columns: repeat(2, 220px);
+  }
+  .parent {
+    width: 100%;
+    max-width: 220px;
+    margin: 10px auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .flashcard-categories {
+    grid-template-columns: 1fr;
+  }
+  .parent {
+    width: 90%;
+    margin: 10px auto;
+  }
+}

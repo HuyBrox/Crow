@@ -36,7 +36,7 @@ export const requireAuth = async (req, res, next) => {
         const token = req.cookies.token;
         if (!token) {
             req.flash('error', 'Vui lòng đăng nhập để tiếp tục!');
-            return res.redirect('/login');
+            return res.redirect('/');
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -45,7 +45,7 @@ export const requireAuth = async (req, res, next) => {
         if (!user) {
             req.flash('error', 'Xác thực không hợp lệ, vui lòng đăng nhập lại.');
             res.clearCookie('token');
-            return res.redirect('/login');
+            return res.redirect('/');
         }
 
         res.locals.user = user;

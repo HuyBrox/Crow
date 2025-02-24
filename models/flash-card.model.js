@@ -18,11 +18,6 @@ const flashCardSchema = new mongoose.Schema({
             },
         }
     ],
-    language: {
-        type: String,
-        required: true,
-        enum: ['en', 'vi', 'jp'],
-    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: User,
