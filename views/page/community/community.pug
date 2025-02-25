@@ -3,23 +3,23 @@ include ../../mixin/alert.pug
 block style
     link(rel="stylesheet" href="./css/community.css")
 block main
+    +alert-success(5000)
+    +alert-error(5000)
     .container(style = "margin-top : 80px ; ")
-        +alert-success(5000)
-        +alert-error(5000)
         //Đăng bài viết
         .block-create-post
             .user-avatar
-                img(src="./img/Avata.png", alt="User Avatar")
+                img(src="./img/Avata.png" alt="User Avatar")
                 input.post-input(placeholder="Bạn đang nghĩ gì thế?" readonly)
             .post-options
                 .option
-                    img(src=" /img/Live.png", alt="Video trực tiếp")
+                    img(src=" /img/Live.png" alt="Video trực tiếp")
                     span Video trực tiếp
                 .option
-                    img(src="./img/TepAnh.png", alt="Ảnh/video")
+                    img(src="./img/TepAnh.png" alt="Ảnh/video")
                     span Ảnh/video
                 .option
-                    img(src=" /img/Mặtcuoi.png", alt="Cảm xúc/hoạt động")
+                    img(src=" /img/Mặtcuoi.png" alt="Cảm xúc/hoạt động")
                     span Cảm xúc/hoạt động
 
         // Duyệt qua tất cả bài viết lấy từ database
@@ -47,9 +47,9 @@ block main
                                 span.username= post.author.username
 
                         .likes
-                            button ❤️  
+                            button ❤️
                             span= (post.likes && post.likes.length) ? post.likes.length : 0
-                            button 💬 
+                            button 💬
                             span= (post.comments && post.comments.length) ? post.comments.length : 0
 
 
@@ -60,7 +60,7 @@ block main
                                         .user-info
                                             if comment.author
                                                 img.avatar(src=comment.author.avatar, alt="User Avatar")
-                                                span.by by 
+                                                span.by by
                                                 span.username= comment.author.username
                                                 - var commentDate = comment.createdAt ? new Date(comment.createdAt).toLocaleDateString("vi-VN") : "Không xác định";
                                                 span.time / #{commentDate}

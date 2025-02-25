@@ -13,7 +13,7 @@ export const getCommunity = async (req, res) => {
             })
             .sort({ createdAt: -1 }) // Sắp xếp mới nhất lên đầu
             .exec();
-        //const user = req.session.user || null; 
+        //const user = req.session.user || null;
         console.log("posts", posts);
         //console.log("user", user);
 
