@@ -22,16 +22,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const socket = io('http://localhost:5000', { query: { userId } });
     window.socket = socket;
     // Xử lý danh sách online users (giữ nguyên)
+    // socket.on('getOnlineUsers', (onlineUserIds) => {
+    //     console.log("🟢 Danh sách user online:", onlineUserIds);
+    //     document.querySelectorAll('.person').forEach(person => {
+    //         const userIdElement = person.querySelector('p');
+    //         const userIdText = userIdElement?.textContent || '';
+    //         const statusElement = person.querySelector('.trang_thai p');
+    //         if (statusElement) {
+    //             const isOnline = onlineUserIds.includes(userIdText);
+    //             statusElement.textContent = isOnline ? 'Online' : 'Offline';
+    //             statusElement.className = isOnline ? 'online' : 'offline';
+    //         }
+    //     });
+    // });
     socket.on('getOnlineUsers', (onlineUserIds) => {
         console.log("🟢 Danh sách user online:", onlineUserIds);
         document.querySelectorAll('.person').forEach(person => {
-            const userIdElement = person.querySelector('p');
-            const userIdText = userIdElement?.textContent || '';
+            const chatButton = person.querySelector('.chat-button'); // Lấy button có dataset.receiverId
+            const userId = chatButton?.dataset.receiverId; // Lấy _id từ dataset
             const statusElement = person.querySelector('.trang_thai p');
-            if (statusElement) {
-                const isOnline = onlineUserIds.includes(userIdText);
-                statusElement.textContent = isOnline ? 'Online' : 'Offline';
-                statusElement.className = isOnline ? 'online' : 'offline';
+
+            if (statusElement && userId) {
+                const isOnline = onlineUserIds.includes(userId);
+                statusElement.textContent = '✓'; // Dấu tích thay vì chữ
+                statusElement.className = isOnline ? 'online' : 'offline'; // Gán class để đổi màu
             }
         });
     });

@@ -230,3 +230,17 @@ export const getAbout = async (req, res) => {
     }
 };
 
+//API get list user
+export const getListUser = async (req, res) => {
+    try {
+        const users = await User.find().select('-password');
+        console.log('users:', users);
+        res.status(200).json({
+            status: 'success',
+            data: users,
+        });
+    } catch (error) {
+        console.error('Lỗi:', error);
+        res.status(500).send('Server error');
+    }
+};

@@ -1,11 +1,12 @@
 import express from 'express';
 import {
     getLogin, postLogin, getRegister, postRegister, getLogout, getHome,
-    getAbout
+    getAbout,
+    getListUser
 } from '../controller/user.controller.js';
 import { auth, requireAuth } from '../middleware/auth.js';
 
-import { getflashcards } from '../controller/flashcards.controller.js';
+
 
 const router = express.Router();
 
@@ -17,4 +18,5 @@ router.post('/register', postRegister);
 router.get('/logout', getLogout);
 router.get('/', auth, getHome);
 router.get('/about', requireAuth, getAbout)
+router.get('/getUsers', requireAuth, getListUser);
 export default router;

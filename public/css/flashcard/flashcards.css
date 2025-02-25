@@ -28,7 +28,7 @@ body {
 
 .flashcards {
   box-sizing: border-box;
-  background: linear-gradient(135deg, #ffccfb, #ffc695);
+  background: linear-gradient(135deg, #fad0f6, #ffc695);
   width: 100%;
   height: 337px;
   padding: 80px 20px;
@@ -83,16 +83,15 @@ body {
   background-image: linear-gradient(#fffefd, #ffdeb1),
     conic-gradient(
       from var(--gradient-angle),
-      #e67e22 0%,
-      #ff9100 37%,
-      #ffab40 30%,
-      #e67e22 33%,
-      #ff6f00 40%,
-      #ff6f00 50%,
-      #ff9100 77%,
-      #ffab40 80%,
-      #ff9100 83%,
-      #ff6f00 90%
+      #ffffff 0%,
+      /* Trắng đầu */ #ffab40 15%,
+      /* Cam nhạt - mờ dần vào */ #ff6f00 25%,
+      /* Cam đậm đầu tiên */ #ffab40 35%,
+      /* Cam nhạt - đậm dần ra */ #ffffff 50%,
+      /* Trắng cách biệt */ #ffab40 65%,
+      /* Cam nhạt - mờ dần vào */ #ff6f00 75%,
+      /* Cam đậm thứ hai */ #ffab40 85%,
+      /* Cam nhạt - đậm dần ra */ #ffffff 100% /* Trắng cuối */
     );
   background-clip: padding-box, border-box;
   background-origin: padding-box, border-box;
@@ -242,6 +241,7 @@ button {
   border: none;
   font-size: 0.9em;
   transition: all 0.3s ease;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .control button:hover {
@@ -273,12 +273,13 @@ section.flashcards .content {
 }
 
 section.flashcards h1 {
-  font-family: "Playfair Display", serif; /* Font thanh lịch */
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 700;
-  color: #2c2c2c; /* Màu xám đậm nhẹ nhàng */
+  color: #000c3f; /* Màu xám đậm nhẹ nhàng */
   margin-bottom: 15px;
   letter-spacing: 1px; /* Khoảng cách chữ tinh tế */
+  text-transform: uppercase; /* Chữ in hoa */
+  text-shadow: 1px 1px 2px rgb(4, 12, 131);
 }
 
 section.flashcards .description {
