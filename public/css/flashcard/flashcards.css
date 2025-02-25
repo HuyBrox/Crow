@@ -18,10 +18,17 @@ body {
   margin: 0 auto;
   padding: 40px;
 }
+.control {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
 .flashcards {
   box-sizing: border-box;
-  background: linear-gradient(135deg, #e67e22, #f17202);
+  background: linear-gradient(135deg, #ffccfb, #ffc695);
   width: 100%;
   height: 337px;
   padding: 80px 20px;
@@ -141,7 +148,7 @@ body {
 }
 
 .content a:hover {
-  background: #d35400;
+  background: #65b5ff;
   transform: scale(1.05);
 }
 
@@ -223,4 +230,85 @@ body {
     width: 90%;
     margin: 10px auto;
   }
+}
+.control a,
+button {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--primary-color);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
+}
+
+.control button:hover {
+  background: #d35400;
+  transform: scale(1.05);
+}
+/* bong bóng */
+/* Import font thanh lịch */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&display=swap");
+
+section.flashcards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  min-height: 150px;
+  overflow: hidden;
+  background-color: #f8f1e9; /* Màu nền nhạt, thanh lịch */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+}
+
+section.flashcards .content {
+  position: relative;
+  z-index: 1; /* Đảm bảo chữ nằm trên bong bóng */
+  text-align: center;
+}
+
+section.flashcards h1 {
+  font-family: "Playfair Display", serif; /* Font thanh lịch */
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c2c2c; /* Màu xám đậm nhẹ nhàng */
+  margin-bottom: 15px;
+  letter-spacing: 1px; /* Khoảng cách chữ tinh tế */
+}
+
+section.flashcards .description {
+  font-family: "Lora", serif; /* Font mềm mại, dễ đọc */
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #555; /* Màu xám trung tính */
+  line-height: 1.6; /* Khoảng cách dòng thoải mái */
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Style cho bong bóng */
+.bubble {
+  position: absolute;
+  background: rgba(255, 182, 193, 0.5); /* Màu hồng phấn nhạt, trong suốt */
+  border-radius: 50%;
+  pointer-events: none; /* Không cản trở tương tác */
+  z-index: 0; /* Nằm dưới chữ */
+}
+/* Style cho bong bóng */
+.bubble {
+  position: absolute;
+  background: rgba(255, 182, 193, 0.5); /* Màu hồng phấn nhạt, trong suốt */
+  border-radius: 50%;
+  pointer-events: none; /* Không cản trở tương tác */
+  z-index: 0; /* Nằm dưới chữ */
+  /* Thêm box-shadow để tạo hiệu ứng 3D */
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.7),
+    /* Ánh sáng bên trong */ inset 0 -5px 15px rgba(255, 182, 193, 0.8),
+    /* Gradient sáng từ dưới */ 0 5px 15px rgba(255, 182, 193, 0.4); /* Đổ bóng bên ngoài */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Viền sáng nhẹ */
 }

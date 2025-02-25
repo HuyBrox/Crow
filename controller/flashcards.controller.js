@@ -95,3 +95,52 @@ export const postCreateCard = async (req, res) => {
         });
     }
 };
+
+//xóa thẻ và xóa bộ thẻ
+export const deleteCard = async (req, res) => {
+    try {
+        const user = res.locals.user;
+        const cardId = req.params.id;
+        const flashCard = await FlashCard.findOne({ 'cards._id': cardId, user: user._id });
+        if (!flashCard) {
+            throw new Error('Không tìm thấy thẻ!');
+        }
+        flashCard.cards = flashCard.cards.filter(card => card._id.toString() !== cardId);
+        await flashCard.save();
+        req.flash('success', 'Xóa thẻ thành công!');
+        res.redirect('/flashcards');
+    } catch (error) {
+        req.flash('error', 'Có lỗi khi xóa thẻ!');
+        res.redirect('/flashcards');
+    }
+};
+export const deleteFlashCard = async (req, res) => {
+    try {
+        const user = res.locals.user;
+        console.log('User:', user);
+        if (!user || !user._id) {
+            req.flash('error', 'Unauthorized');
+            return res.redirect('/flashcards');
+        }
+
+        const flashCardId = req.params.id;
+        console.log('Flashcard ID:', flashCardId);
+
+        const flashCard = await FlashCard.findOne({ _id: flashCardId, user: user._id });
+        console.log('Found flashcard:', flashCard);
+        if (!flashCard) {
+            req.flash('error', 'Không tìm thấy bộ thẻ!');
+            return res.redirect('/flashcards');
+        }
+
+        await flashCard.deleteOne();
+        console.log('Flashcard deleted');
+
+        req.flash('success', 'Xóa bộ thẻ thành công!');
+        return res.redirect('/flashcards');
+    } catch (error) {
+        console.error('Error in deleteFlashCard:', error);
+        req.flash('error', 'Có lỗi khi xóa bộ thẻ!');
+        return res.redirect('/flashcards');
+    }
+};
