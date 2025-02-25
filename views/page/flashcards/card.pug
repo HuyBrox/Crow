@@ -1,0 +1,40 @@
+extends ../../layout/default
+include ../../mixin/alert
+
+block style
+    link(rel="stylesheet" href="/css/flashcard/card.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
+block main
+    .container
+        button#clear.clear.btn
+            i.fas.fa-trash
+            |  Clear Cards
+        h1
+            | Memory Cards
+            button#show.btn
+                i.fas.fa-plus
+                |  Add New Card
+        #cards-container.cards
+        .navigation
+            button#prev.nav-button
+                i.fas.fa-arrow-left
+            p#current
+            button#next.nav-button
+                i.fas.fa-arrow-right
+        #add-container.add-container
+            h1
+                | Add New Card
+                button#hide.btn.btn-small.btn-ghost
+                    i.fas.fa-times
+            .form-group
+                label(for='question') Question
+                textarea#question(placeholder='Enter Question...')
+            .form-group
+                label(for='answer') Answer
+                textarea#answer(placeholder='Enter Answer...')
+            button#add-card.btn.btn-margin
+                i.fas.fa-plus
+                |  Add Card
+
+block script2
+    script(src="/js/flashcard/index.js" type="module")

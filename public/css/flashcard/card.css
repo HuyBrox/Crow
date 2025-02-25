@@ -8,10 +8,6 @@
   --border-color: #aaa;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 body {
   background-color: var(--background-color);
   background-image: linear-gradient(
@@ -20,13 +16,21 @@ body {
     var(--secondary-background-color) 100%
   );
   font-family: "Poppins", sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
   overflow: hidden;
   margin: 0;
+}
+.container {
+  margin-top: 20px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  position: relative;
+  background-color: #8e44ad;
+  width: 100%;
+  height: calc(100vh);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
 }
 
 h1 button {
