@@ -5,15 +5,21 @@ block style
     link(rel="stylesheet" href="/css/flashcard/card.css")
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css")
 block main
+    if(flashCard)
+        .card-data(data=JSON.stringify(flashCard))
     .container
-        button#clear.clear.btn
-            i.fas.fa-trash
-            |  Clear Cards
+        .box
+            button#clear.clear.btn.btn-custom
+                i.fas.fa-trash
+                |  Xóa tất cả
+            button#random.clear.btn.btn-custom
+                i.fas.fa-random
+                |  Trộn thẻ
         h1
-            | Memory Cards
-            button#show.btn
+            | Thẻ [#{flashCard.name}]
+            button#show.btn.btn-custom
                 i.fas.fa-plus
-                |  Add New Card
+                |  Thêm mới
         #cards-container.cards
         .navigation
             button#prev.nav-button
@@ -21,20 +27,21 @@ block main
             p#current
             button#next.nav-button
                 i.fas.fa-arrow-right
-        #add-container.add-container
+        #add-container.add-container.card-animation
             h1
-                | Add New Card
-                button#hide.btn.btn-small.btn-ghost
+                | Thêm thẻ mới
+                button#hide.btn.btn-small.btn-custom
                     i.fas.fa-times
             .form-group
-                label(for='question') Question
-                textarea#question(placeholder='Enter Question...')
+                label(for='vocabylary') Câu hỏi
+                textarea#question(placeholder='Nhập câu hỏi...')
+            #alert
             .form-group
-                label(for='answer') Answer
-                textarea#answer(placeholder='Enter Answer...')
-            button#add-card.btn.btn-margin
+                label(for='meaning') Trả lời
+                textarea#answer(placeholder='Nhập câu trả lời...')
+            button#add-card.btn.btn-margin.btn-custom
                 i.fas.fa-plus
-                |  Add Card
+                |  Thêm thẻ
 
 block script2
     script(src="/js/flashcard/index.js" type="module")

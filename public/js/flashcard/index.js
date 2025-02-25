@@ -7,7 +7,7 @@ const showButton = document.getElementById("show");
 const hideButton = document.getElementById("hide");
 const addContainer = document.getElementById("add-container");
 const shuffleButton = document.getElementById("random"); // Nút trộn thẻ
-
+const alertMessage = document.getElementById("alert");
 // Lấy dữ liệu từ HTML (Pug đã render)
 const cardData = document.querySelector(".card-data");
 const flashcard = JSON.parse(cardData.getAttribute("data"));
@@ -34,7 +34,7 @@ function createCard(data, index) {
     card.classList.add("card");
     if (index === 0) card.classList.add("active");
     card.innerHTML = `
-    <div class="inner-card course-card">
+    <div class="inner-card card-animation">
         <div class="inner-card-front">
             <p style="font-size:1.5rem">${data.question}</p>
         </div>
@@ -79,12 +79,21 @@ prevButton.addEventListener("click", () => {
 showButton.addEventListener("click", () => addContainer.classList.add("show"));
 
 // Đóng form thêm card
-hideButton.addEventListener("click", () => addContainer.classList.remove("show"));
+hideButton.addEventListener("click", () => {
+    addContainer.classList.remove("show");
+    document.getElementById("question").value = "";
+    document.getElementById("answer").value = "";
+    location.reload();
+});
 
 // Trộn ngẫu nhiên danh sách thẻ
 shuffleButton.addEventListener("click", () => {
     if (cardsData.length === 0) {
-        alert("Không có thẻ để trộn!");
+        alertMessage.innerText = "Không có thẻ để trộn!";
+        setTimeout(() => {
+            alertMessage.innerText = "";
+        }, 2000);
+
         return;
     }
 
@@ -126,8 +135,11 @@ document.getElementById("add-card").addEventListener("click", async () => {
 
         const data = await response.json();
         console.log(data.message); // Kiểm tra phản hồi từ server
-        alert(data.message); // Thông báo thành công (hoặc cập nhật UI)
-        location.reload(); // Tải lại trang để cập nhật danh sách thẻ
+        alertMessage.innerText = data.message;
+        setTimeout(() => {
+            alertMessage.innerText = "";
+        }, 2000);
+        // Tải lại trang để cập nhật danh sách thẻ
     } catch (error) {
         console.error("Lỗi khi thêm thẻ:", error);
     }

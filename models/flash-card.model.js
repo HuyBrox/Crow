@@ -6,7 +6,7 @@ const flashCardSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    card: [
+    cards: [
         {
             vocabulary: {
                 type: String,

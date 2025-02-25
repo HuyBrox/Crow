@@ -9,12 +9,8 @@
 }
 
 body {
-  background-color: var(--background-color);
-  background-image: linear-gradient(
-    315deg,
-    var(--background-color) 0%,
-    var(--secondary-background-color) 100%
-  );
+  /* background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%); */
+  background-image: linear-gradient(to top, #ffe0a6 0%, white 100%);
   font-family: "Poppins", sans-serif;
   overflow: hidden;
   margin: 0;
@@ -24,7 +20,7 @@ body {
   margin: 0 auto;
   padding: 1.25rem;
   position: relative;
-  background-color: #8e44ad;
+  background-color: #ffffff00;
   width: 100%;
   height: calc(100vh);
   align-items: center;
@@ -32,7 +28,14 @@ body {
   display: flex;
   flex-direction: column;
 }
-
+h1 {
+  color: #001227ee;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  text-align: center;
+  text-shadow: 3px 3px 2px rgba(7, 7, 7, 0.26);
+}
 h1 button {
   position: absolute;
   top: 2rem;
@@ -42,13 +45,26 @@ h1 button {
 
 .btn {
   cursor: pointer;
-  background-color: var(--background-color);
+
   border: none;
   border-radius: 0.625rem;
   font-size: 0.875rem;
   padding: 0.5rem 1rem;
 }
-
+.btn-custom {
+  color: #ffffff;
+  border-radius: 5px;
+  height: 37px;
+  width: 130px;
+  font-family: "Lato", sans-serif;
+  /* background: transparent; */
+  background: linear-gradient(90deg, #ffa946 0%, #ffc7a6 100%);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+    7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
 .btn-small {
   font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
@@ -65,9 +81,10 @@ h1 button {
   max-width: 90%;
 }
 
-.btn:hover {
-  background-color: var(--primary-color);
+.btn-custom:hover {
+  /* background-color: var(--primary-color);*/
   color: var(--light-color);
+  background: linear-gradient(90deg, #f09835 100%, #ffe8ce 0%);
 }
 
 .btn:focus,
@@ -75,10 +92,13 @@ h1 button {
   outline: none;
 }
 
-.clear {
+.box {
   position: absolute;
   bottom: 2rem;
   left: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cards {
@@ -91,7 +111,7 @@ h1 button {
 
 .card {
   background-color: var(--light-color);
-  border-radius: 0.625rem;
+  border-radius: 25px;
   position: absolute;
   font-size: 1.5rem;
   top: 0;
@@ -182,20 +202,31 @@ h1 button {
 
 .navigation p {
   margin: 0 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .add-container {
-  background-color: var(--secondary-background-color);
+  background-color: rgb(255, 255, 255);
   border-top: 2px solid var(--border-color);
   display: flex;
+  border-radius: 25px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 0.625rem 0;
   position: absolute;
-  top: 0;
+  overflow: hidden;
+  /* hiển thị thanh cuộn: nếu cần:*/
+  overflow-y: auto;
+  /* css thanh cuộn: */
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255, 240, 220) rgb(255, 176, 103);
+  top: 150px;
   bottom: 0;
-  width: 100%;
+  width: 90%;
+  padding: 20px;
+  height: 70vh;
   opacity: 0;
   z-index: -1;
   transition: all 0.3s ease;
@@ -220,6 +251,9 @@ h1 button {
 .form-group label {
   display: block;
   margin: 1.25rem 0 0.625rem;
+  font-size: 1.5rem;
+  font-weight: 600px;
+  color: rgb(139, 166, 255);
 }
 
 .form-group textarea {
@@ -229,4 +263,65 @@ h1 button {
   padding: 0.75rem;
   width: 31.25rem;
   max-width: 90%;
+}
+#random {
+  margin-left: 20px;
+}
+#show {
+  margin-top: 100px;
+}
+
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0turn;
+  inherits: false;
+}
+
+/* animation - huy */
+.card-animation {
+  animation: 2s gradient-angle infinite linear;
+  border: 4px solid transparent;
+
+  background-image: linear-gradient(#ffffff, #ffffff),
+    conic-gradient(
+      from var(--gradient-angle),
+      #584827 0%,
+      #c7a03c 37%,
+      #f9de90 30%,
+      #c7a03c 33%,
+      #584827 40%,
+      #584827 50%,
+      #c7a03c 77%,
+      #f9de90 80%,
+      #c7a03c 83%,
+      #584827 90%
+    );
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+}
+
+@keyframes gradient-angle {
+  to {
+    --gradient-angle: 1turn;
+  }
+}
+/* end animation */
+.btn-small {
+  border-radius: 9999px;
+  width: 20px;
+  height: 20px;
+}
+
+#alert {
+  color: rgb(35, 223, 75);
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+}
+.card p {
+  margin: 0;
+  padding: 1.25rem;
+  font-weight: 510;
+
+  color: rgba(0, 57, 110, 0.986);
 }

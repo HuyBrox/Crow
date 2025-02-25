@@ -14,6 +14,24 @@ export const getflashcards = async (req, res) => {
 
     }
 }
+//thêm thẻ
+export const newCard = async (req, res) => {
+    try {
+        const user = res.locals.user;
+        const id = req.params.id;
+        const { vocabulary, meaning } = req.body;
+        const flashCard = await FlashCard.findOne({ _id: id, user: user._id });
+        if (!flashCard) {
+            throw new Error('Không tìm thấy bộ thẻ!');
+        }
+        flashCard.cards.push({ vocabulary, meaning });
+        await flashCard.save();
+        req.flash('success', 'Thêm thẻ thành công!');
+        return res.status(200).json({ message: 'Thêm thẻ thành công!' });
+    } catch (error) {
+
+    }
+}
 //thẻ học tập chi tiết
 export const getflashcardDetail = async (req, res) => {
 
