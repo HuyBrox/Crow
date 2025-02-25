@@ -1,14 +1,17 @@
-//flashcards
-export const getflashcards= async (req, res) => {
-    if (res.locals.user) {
-        const allUsers = await User.find({ _id: { $ne: res.locals.user._id } }).select('-password');
-        res.render('./page/flashcards/flashcards', {
-            title: 'Thẻ Học Tập',
-            allUsers: allUsers,
+import Course from "../models/course.model.js";
+
+export const getflashcards = async (req, res) => {
+    try {
+        console.log(Course);
+        // Lấy danh sách các khóa học chứa flashcards
+        const courses = await Course.find().select("name wordCount description");
+
+        res.render("./page/flashcards/flashcards", {
+            title: "Thẻ Học Tập",
+            courses: courses, // Gửi dữ liệu xuống giao diện Pug
         });
-        return;
+    } catch (error) {
+        console.error("Lỗi khi lấy danh sách flashcards:", error);
+        res.status(500).send("Lỗi server");
     }
-    res.render('./page/flashcards/flashcards', {
-        title: 'Thẻ Học Tập',
-    });
-}
+};
