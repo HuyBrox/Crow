@@ -56,11 +56,11 @@ function createCard(data, index) {
         <div class="inner-card card-animation">
             <div class="inner-card-front">
                 <p style="font-size:1.5rem">${data.question}</p>
-                <button class="voice-btn front-voice" data-text="${data.question}">Voice</button>
+                <button class="voice-btn front-voice" data-text="${data.question}"><i class="fa-solid fa-volume-high"></i></i></button>
             </div>
             <div class="inner-card-back">
                 <p style="font-size:1.5rem">${data.answer}</p>
-                <button class="voice-btn back-voice" data-text="${data.answer}">Voice</button>
+                <button class="voice-btn back-voice" data-text="${data.answer}"><i class="fa-solid fa-volume-high"></i></button>
             </div>
         </div>
     `;
@@ -69,16 +69,16 @@ function createCard(data, index) {
     // Thêm sự kiện cho nút Voice trên mặt trước
     const frontVoiceBtn = card.querySelector(".front-voice");
     frontVoiceBtn.addEventListener("click", (e) => {
-        e.stopPropagation(); // Ngăn sự kiện click lan ra thẻ cha
-        const text = e.target.getAttribute("data-text");
+        e.stopPropagation();
+        const text = frontVoiceBtn.getAttribute("data-text"); // Lấy từ <button>
         speakText(text);
     });
 
     // Thêm sự kiện cho nút Voice trên mặt sau
     const backVoiceBtn = card.querySelector(".back-voice");
     backVoiceBtn.addEventListener("click", (e) => {
-        e.stopPropagation(); // Ngăn sự kiện click lan ra thẻ cha
-        const text = e.target.getAttribute("data-text");
+        e.stopPropagation();
+        const text = backVoiceBtn.getAttribute("data-text"); // Lấy từ <button>
         speakText(text);
     });
 
