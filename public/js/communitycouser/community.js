@@ -22,16 +22,3 @@ document.addEventListener("click", function (event) {
 });
 
 
-// //pop up sua bai
-// function openEditPopup(postId, caption, desc) {
-//     document.getElementById("editPostId").value = postId;
-//     document.getElementById("editCaption").value = caption;
-//     document.getElementById("editDesc").value = desc;
-//     document.getElementById("editPostForm").action = `/community/edit/${postId}`;
-//     document.getElementById("editPostPopup").style.display = "flex";
-//     popup.style.display = "flex";
-// }
-
-// function closeEditPopup() {
-//     document.getElementById("editPostPopup").style.display = "none";
-// }
