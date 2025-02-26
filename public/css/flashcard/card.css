@@ -341,3 +341,114 @@ h1 button {
 
   color: rgba(0, 57, 110, 0.986);
 }
+/* css nút AI */
+.button-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%;
+  max-width: 450px;
+  margin-bottom: 20px;
+}
+
+.btn.btn-margin.btn-custom {
+  margin: 0; /* Loại bỏ margin mặc định nếu có */
+}
+
+.language-select {
+  width: 200px; /* Độ rộng của select box */
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 14px;
+}
+
+/* Tùy chỉnh Select2
+.select2-container .select2-selection--single {
+  height: 38px;
+  display: flex;
+  align-items: center;
+}
+
+.select2-container .select2-selection__rendered {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+}
+
+.select2-container .select2-selection__arrow {
+  height: 38px;
+}
+
+.flag-img {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+} */
+/* Tùy chỉnh Select2 */
+.select2-container .select2-selection--single {
+  height: 38px;
+  display: flex;
+  align-items: center;
+}
+
+.select2-container .select2-selection__rendered {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+}
+
+.select2-container .select2-selection__arrow {
+  height: 38px;
+}
+
+.flag-img {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+/* Tùy chỉnh thanh cuộn cho dropdown của Select2 */
+.select2-results__options {
+  /* Thanh cuộn siêu mỏng, siêu mờ nhưng vẫn thấy */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent; /* Firefox: màu thanh cuộn mờ */
+}
+
+.select2-results__options::-webkit-scrollbar {
+  width: 2.5px;
+  background: transparent;
+}
+
+.select2-results__options::-webkit-scrollbar-track {
+  background: rgba(255, 244, 237, 0.397); /* Màu nền thanh cuộn */
+}
+
+.select2-results__options::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.055); /* Màu thanh cuộn mờ */
+  border-radius: 10px; /* Bo tròn thanh cuộn */
+}
+
+.select2-results__options::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.651);
+}
+
+/* Tùy chỉnh thanh tìm kiếm của Select2 */
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  outline: none;
+  height: 23px;
+  font-size: 12px;
+}
+
+.select2-container--default
+  .select2-search--dropdown
+  .select2-search__field:focus {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border-color: #aaa;
+}

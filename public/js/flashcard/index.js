@@ -29,25 +29,7 @@ function createCards() {
     cardsData.forEach((data, index) => createCard(data, index));
 }
 
-// function createCard(data, index) {
-//     const card = document.createElement("div");
-//     card.classList.add("card");
-//     if (index === 0) card.classList.add("active");
-//     card.innerHTML = `
-//     <div class="inner-card card-animation">
-//         <div class="inner-card-front">
-//             <p style="font-size:1.5rem">${data.question}</p>
-//         </div>
-//         <div class="inner-card-back">
-//             <p style="font-size:1.5rem">${data.answer}</p>
-//         </div>
-//     </div>
-//     `;
-//     card.addEventListener("click", () => card.classList.toggle("show-answer"));
-//     cardsElement.push(card);
-//     cardsContainer.appendChild(card);
-//     updateCurrentText();
-// }
+
 function createCard(data, index) {
     const card = document.createElement("div");
     card.classList.add("card");
@@ -201,4 +183,66 @@ document.getElementById("add-card").addEventListener("click", async () => {
     } catch (error) {
         console.error("Lỗi khi thêm thẻ:", error);
     }
+});
+
+$(document).ready(function () {
+    // Khởi tạo Select2
+    $('#outputLang').select2({
+        templateResult: formatLanguage, // Hiển thị trong dropdown
+        templateSelection: formatLanguage, // Hiển thị khi chọn
+        placeholder: 'Chọn ngôn ngữ',
+        allowClear: true,
+    });
+
+    // Hàm hiển thị quốc kỳ và tên ngôn ngữ
+    function formatLanguage(language) {
+        if (!language.id) return language.text; // Placeholder
+        const flagImg = language.element.dataset.img; // URL hình ảnh
+        const flagEmoji = language.element.dataset.flag; // Emoji cờ
+        const $language = $(
+            `<span><img src="${flagImg}" class="flag-img" alt="${language.text}"/> ${language.text}</span>`
+            // Nếu muốn dùng emoji thay img: `<span>${flagEmoji} ${language.text}</span>`
+        );
+        return $language;
+    }
+
+    // Xử lý click nút AI Gennarate
+    const questionTextarea = document.getElementById('question');
+    const answerTextarea = document.getElementById('answer');
+    const aiGenButton = document.getElementById('AI-gen');
+    const alertDiv = document.getElementById('alert');
+
+    aiGenButton.addEventListener('click', async () => {
+        const questionText = questionTextarea.value.trim();
+        const outputLang = $('#outputLang').val() || 'en'; // Lấy giá trị từ Select2
+
+        if (!questionText) {
+            alertDiv.innerHTML = '<p class="text-danger">Vui lòng nhập câu hỏi!</p>';
+            return;
+        }
+
+        alertDiv.innerHTML = '';
+
+        try {
+            const response = await fetch('/AI-gen', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer YOUR_AUTH_TOKEN', // Thay bằng token thực tế
+                },
+                body: JSON.stringify({ question: questionText, outputLang: outputLang }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            answerTextarea.value = data.answer;
+
+        } catch (error) {
+            console.error('Lỗi khi gọi API /AI-gen:', error);
+            alertDiv.innerHTML = '<p class="text-danger">Đã có lỗi xảy ra. Vui lòng thử lại!</p>';
+        }
+    });
 });
