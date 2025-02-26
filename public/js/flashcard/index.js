@@ -29,26 +29,84 @@ function createCards() {
     cardsData.forEach((data, index) => createCard(data, index));
 }
 
+// function createCard(data, index) {
+//     const card = document.createElement("div");
+//     card.classList.add("card");
+//     if (index === 0) card.classList.add("active");
+//     card.innerHTML = `
+//     <div class="inner-card card-animation">
+//         <div class="inner-card-front">
+//             <p style="font-size:1.5rem">${data.question}</p>
+//         </div>
+//         <div class="inner-card-back">
+//             <p style="font-size:1.5rem">${data.answer}</p>
+//         </div>
+//     </div>
+//     `;
+//     card.addEventListener("click", () => card.classList.toggle("show-answer"));
+//     cardsElement.push(card);
+//     cardsContainer.appendChild(card);
+//     updateCurrentText();
+// }
 function createCard(data, index) {
     const card = document.createElement("div");
     card.classList.add("card");
     if (index === 0) card.classList.add("active");
     card.innerHTML = `
-    <div class="inner-card card-animation">
-        <div class="inner-card-front">
-            <p style="font-size:1.5rem">${data.question}</p>
+        <div class="inner-card card-animation">
+            <div class="inner-card-front">
+                <p style="font-size:1.5rem">${data.question}</p>
+                <button class="voice-btn front-voice" data-text="${data.question}">Voice</button>
+            </div>
+            <div class="inner-card-back">
+                <p style="font-size:1.5rem">${data.answer}</p>
+                <button class="voice-btn back-voice" data-text="${data.answer}">Voice</button>
+            </div>
         </div>
-        <div class="inner-card-back">
-            <p style="font-size:1.5rem">${data.answer}</p>
-        </div>
-    </div>
     `;
     card.addEventListener("click", () => card.classList.toggle("show-answer"));
+
+    // Thêm sự kiện cho nút Voice trên mặt trước
+    const frontVoiceBtn = card.querySelector(".front-voice");
+    frontVoiceBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // Ngăn sự kiện click lan ra thẻ cha
+        const text = e.target.getAttribute("data-text");
+        speakText(text);
+    });
+
+    // Thêm sự kiện cho nút Voice trên mặt sau
+    const backVoiceBtn = card.querySelector(".back-voice");
+    backVoiceBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // Ngăn sự kiện click lan ra thẻ cha
+        const text = e.target.getAttribute("data-text");
+        speakText(text);
+    });
+
     cardsElement.push(card);
     cardsContainer.appendChild(card);
     updateCurrentText();
 }
 
+// Hàm gọi API để đọc văn bản
+async function speakText(text) {
+    try {
+        const response = await fetch('/api/tts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: text })
+        });
+
+        if (!response.ok) throw new Error('Lỗi khi gọi API TTS');
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const audio = new Audio(url);
+        audio.play();
+    } catch (error) {
+        console.error('Error playing audio:', error);
+        alert('Không thể đọc được nội dung. Vui lòng thử lại.');
+    }
+}
 function updateCurrentText() {
     currentElement.innerText = `${currentActiveCard + 1}/${cardsElement.length}`;
 }
