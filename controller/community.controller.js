@@ -1,17 +1,18 @@
 
-import Post from '../models/post.model.js'; // Import model bài viết
-import Comment from '../models/comment.model.js'; // Import model bình luận
+import Post from '../models/post.model.js'; 
+import Comment from '../models/comment.model.js';
 
+// Hiển thị trang cộng đồng
 export const getCommunity = async (req, res) => {
     try {
-        // Lấy tất cả bài viết, sắp xếp theo thời gian mới nhất và lấy đầy đủ thông tin liên quan
+        // Lay bai viet
         const posts = await Post.find()
-            .populate("author", "username avatar") // Lấy thông tin tác giả
+            .populate("author", "username avatar") 
             .populate({
                 path: "comments",
-                populate: { path: "author", select: "username avatar" } // Lấy thông tin tác giả của bình luận
+                populate: { path: "author", select: "username avatar" } 
             })
-            .sort({ createdAt: -1 }) // Sắp xếp mới nhất lên đầu
+            .sort({ createdAt: -1 }) 
             .exec();
         //const user = req.session.user || null; 
         console.log("posts", posts);
@@ -19,7 +20,7 @@ export const getCommunity = async (req, res) => {
 
         res.render("./page/community/community", {
             title: "Cộng đồng",
-            posts, // Truyền danh sách bài viết về Pug
+            posts, 
             //user,
         });
 
@@ -28,6 +29,8 @@ export const getCommunity = async (req, res) => {
         res.status(500).send("Lỗi máy chủ");
     }
 };
+
+
 
 
 
