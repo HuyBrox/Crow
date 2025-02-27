@@ -3,7 +3,7 @@ import { requireAuth } from '../middleware/auth.js';
 import * as PlayHT from 'playht';
 import dotenv from 'dotenv';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-
+import FlashCard from '../models/flash-card.model.js';
 dotenv.config();
 const router = express.Router();
 
@@ -93,6 +93,61 @@ router.post('/AI-gen', requireAuth, async (req, res) => {
         return res.status(500).send('Lỗi server: ' + error.message);
     }
 });
+// Route API gen bài tập từ flashcard
+router.get('/AI-gen-quiz/:id', requireAuth, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const flashcard = await FlashCard.findById(id).populate('cards');
+        if (!flashcard) {
+            req.flash('error', 'Không tìm thấy thẻ từ');
+            return res.redirect('/flashcards');
+        }
 
+        const cardsData = flashcard.cards.map(card => ({
+            vocabulary: card.vocabulary,
+            meaning: card.meaning,
+        }));
+        if (cardsData.length === 0) {
+            req.flash('error', 'Không có thẻ để gen!');
+            return res.redirect(`/flashcards/${id}`);
+        }
+
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const quiz = {};
+
+        for (let i = 0; i < cardsData.length; i++) {
+            const { vocabulary, meaning } = cardsData[i];
+
+            const question = `Nghĩa của từ: "${vocabulary}"?`;
+
+            const prompt = `
+                Given the word "${vocabulary}" meaning "${meaning}", generate exactly 3 incorrect meanings for this word (same language as "${meaning}")
+                Return only 3 incorrect meanings, one per line, without any additional text or explanation.
+            `;
+            const result = await model.generateContent(prompt);
+            const wrongAnswers = result.response.text().trim().split('\n').slice(0, 3);
+
+            const answers = [
+                `+${meaning}`,
+                `-${wrongAnswers[0] || '🤖'}`,
+                `-${wrongAnswers[1] || '🤖'}`,
+                `-${wrongAnswers[2] || '🤖'}`,
+            ];
+
+            // Xáo trộn mảng answers
+            for (let j = answers.length - 1; j > 0; j--) {
+                const k = Math.floor(Math.random() * (j + 1));
+                [answers[j], answers[k]] = [answers[k], answers[j]];
+            }
+
+            quiz[`${i + 1} - ${question}`] = answers;
+        }
+        req.flash('success', 'Rất vui được giúp bạn học từ vựng!');
+        return res.render('./page/flashcards/quiz', { quiz, flashcard });
+    } catch (error) {
+        req.flash('error', 'Lỗi khi tạo bài tập');
+        return res.redirect(`/flashcards/`);
+    }
+});
 
 export default router;
