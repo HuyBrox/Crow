@@ -7,16 +7,12 @@ const phatNhac = (nhac) => {
     nhac.loop = true;
     nhac.play().catch(error => console.warn("Không thể phát âm thanh:", error));
 };
-//phat nhac 5s
-const phatNhac5s = (nhac) => {
-    nhac.play().catch(error => console.warn("Không thể phát âm thanh:", error));
-    setTimeout(() => { dungNhac(nhac) }, 8000);
-    //hàm dừng nhạc
-}
+//hàm dừng nhạc
 const dungNhac = (nhac) => {
     nhac.pause();
     nhac.currentTime = 0;
 }
+
 document.addEventListener('DOMContentLoaded', () => {
     // Lấy thông tin user (giả sử input có class "userId" đã có trên trang)
     const userId = document.querySelector('.userId')?.value;
@@ -24,18 +20,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Kết nối Socket.io (lưu ý: chỉnh sửa URL nếu cần)
     const socket = io('http://localhost:5000', { query: { userId } });
-
+    window.socket = socket;
     // Xử lý danh sách online users (giữ nguyên)
+    // socket.on('getOnlineUsers', (onlineUserIds) => {
+    //     console.log("🟢 Danh sách user online:", onlineUserIds);
+    //     document.querySelectorAll('.person').forEach(person => {
+    //         const userIdElement = person.querySelector('p');
+    //         const userIdText = userIdElement?.textContent || '';
+    //         const statusElement = person.querySelector('.trang_thai p');
+    //         if (statusElement) {
+    //             const isOnline = onlineUserIds.includes(userIdText);
+    //             statusElement.textContent = isOnline ? 'Online' : 'Offline';
+    //             statusElement.className = isOnline ? 'online' : 'offline';
+    //         }
+    //     });
+    // });
     socket.on('getOnlineUsers', (onlineUserIds) => {
         console.log("🟢 Danh sách user online:", onlineUserIds);
         document.querySelectorAll('.person').forEach(person => {
-            const userIdElement = person.querySelector('p');
-            const userIdText = userIdElement?.textContent || '';
+            const chatButton = person.querySelector('.chat-button'); // Lấy button có dataset.receiverId
+            const userId = chatButton?.dataset.receiverId; // Lấy _id từ dataset
             const statusElement = person.querySelector('.trang_thai p');
-            if (statusElement) {
-                const isOnline = onlineUserIds.includes(userIdText);
-                statusElement.textContent = isOnline ? 'Online' : 'Offline';
-                statusElement.className = isOnline ? 'online' : 'offline';
+
+            if (statusElement && userId) {
+                const isOnline = onlineUserIds.includes(userId);
+                statusElement.textContent = '✓'; // Dấu tích thay vì chữ
+                statusElement.className = isOnline ? 'online' : 'offline'; // Gán class để đổi màu
             }
         });
     });
@@ -73,8 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
             document.getElementById('localVideo').srcObject = localStream;
-            dungNhac(nhacChuong);
-            dungNhac(nhacCho);
         } catch (err) {
             console.error('Lỗi khi lấy media:', err);
         }
@@ -121,11 +129,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Nếu URL chứa tham số initiatingCall (caller)
     if (initiatingCall && receiverId) {
+        const ringingSound = new Audio('/audio/snaptik.vn_17626.mp3');
+        ringingSound.loop = true;
+
+
         const confirmCall = confirm("📞 Bạn có chắc muốn gọi video không?");
 
         //dừng nhạc
         dungNhac(nhacChuong);
 
+        ringingSound.currentTime = 0; // Reset về đầu
 
         if (confirmCall) {
             startCallerCall();
@@ -138,10 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Nếu URL chứa callerPeerId (callee)
     if (callerPeerId) {
 
-        phatNhac(nhacCho);
         const confirmReceive = confirm("📞 Có cuộc gọi đến. Bạn có muốn nhận cuộc gọi không?");
-        dungNhac(nhacCho);
-
 
         if (confirmReceive) {
             startCalleeCall();
@@ -153,10 +163,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Khi socket nhận sự kiện "receivePeerId" từ server,
     // tức là bên caller gửi peerId cho receiver, mở cửa sổ mới cho callee
     socket.on("receivePeerId", ({ callerId, peerId }) => {
-        console.log("📞 Nhận cuộc gọi từ:", callerId);
+        console.log("📞 Nhận cuộc gọi từ:", callerId, "peerId:", peerId);
         const callUrl = `/call?receiverId=${callerId}&callerPeerId=${peerId}`;
-        window.open(callUrl, "_blank");
+        //phát nhạc chờ
+        nhacCho.muted = true;
+        nhacCho.play().then(() => {
+            nhacCho.muted = false;
+        }).catch(error => console.warn("Không thể phát âm thanh:", error));
+        console.log("url:", callUrl);
+
+        const newWindow = window.open(callUrl, "_blank");
+        if (!newWindow) {
+            alert("Trình duyệt đã chặn popup. Vui lòng tắt chặn popup và thử lại.");
+        }
+
     });
+
 
     // Xử lý lỗi từ PeerJS
     peer.on('error', err => {
@@ -185,18 +207,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // Khi click, mở một tab mới với tham số initiatingCall=true
             const callUrl = `/call?receiverId=${targetReceiverId}&initiatingCall=true`;
             //phát nhạc chuông
-            localStorage.setItem("callStarted", "true");
             phatNhac(nhacChuong);
             window.open(callUrl, "_blank");
-
         });
     });
-    //nhạc:
-    window.addEventListener("storage", (event) => {
-        if (event.key === "callStarted" && event.newValue === "true") {
-            dungNhac(nhacChuong);
-            dungNhac(nhacCho);
-        }
+    //xử lí nút trang chat
+    document.querySelectorAll(".chat-button").forEach(button => {
+        button.addEventListener("click", () => {
+            const targetReceiverId = button.getAttribute("data-receiver-id");
+            if (!targetReceiverId) return;
+            const chatUrl = `/chat?receiverId=${targetReceiverId}`;
+            window.open(chatUrl);
+        });
     });
-
 });

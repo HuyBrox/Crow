@@ -156,10 +156,8 @@ export const getHome = async (req, res) => {
     res.render('./page/home/home', {
         title: 'Trang chủ',
     });
-};
-//profile
-export const getprofile = (req, res) => {
-    res.render('./page/profile/profile', {
-        title: 'Trang cá nhân',
-    });
+
+
+
+
 };
