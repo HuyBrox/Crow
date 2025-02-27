@@ -42,13 +42,16 @@ export const requireAuth = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         const user = await User.findById(decoded._id);
+
         if (!user) {
             req.flash('error', 'Xác thực không hợp lệ, vui lòng đăng nhập lại.');
             res.clearCookie('token');
             return res.redirect('/');
         }
 
+        req.user = user;  // Gán user vào request
         res.locals.user = user;
+        console.log("user request:", user.username);
         next();
     } catch (error) {
         res.clearCookie('token');

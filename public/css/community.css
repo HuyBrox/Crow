@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+  
 .container {
   width: 100%;
   margin: auto;
@@ -88,6 +88,96 @@
   font-weight: bold;
   text-decoration: none;
 }
+/* popup dăng bài */
+
+/* Ẩn popup mặc định */
+.post-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Nội dung của popup */
+.popup-content {
+  background: white;
+  width: 900px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+  border: 3px solid #d47843;
+}
+
+/* Nút đóng popup */
+.popup-content h2 {
+  color: #c58338; 
+  margin-bottom: 15px;
+}
+
+.popup-content .form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.popup-content label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.popup-content input,
+.popup-content textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.popup-content input[type="file"] {
+  border: none;
+}
+
+/* Nút tat mo */
+.popup-content .form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.popup-content button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+/* Nut dang */
+.popup-content button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+}
+
+.popup-content button[type="button"] {
+  background-color: #ccc;
+}
+/* Nút Hủy */
+.popup-content button[type="button"] {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.popup-content button[type="button"]:hover {
+  background-color: #cc0000;
+}
+
 
 /* Noi dung bai */
 .post-content {
@@ -103,6 +193,8 @@
   padding: 15px;
   border-radius: 10px;
   flex: 1;
+  width: 100%; 
+  height: 650px;
 }
 
 .left h2 {
@@ -116,16 +208,38 @@
   color: #717171;
 }
 
-.post-image img {
+/* .post-image img {
   width: 100%;
   border-radius: 10px;
+} */
+
+.post-image {
+  width: 100%; 
+  height: 540px; 
+  overflow: hidden; 
+  border-radius: 10px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.post-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+
 
 .right {
   flex: 1;
   background: #fdf7f2;
   padding: 15px;
   border-radius: 10px;
+  width: 100%; 
+  height: 650px; 
+  position: relative; /* Để đặt phần tử con có position absolute */
 }
 
 .user-profile {
@@ -134,6 +248,76 @@
   gap: 10px;
 }
 
+/* nut tuy chon
+ */
+
+/* Định dạng nút tùy chọn */
+.post-options-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* Nút bấm `...` */
+.options-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+/* Dropdown tùy chọn */
+.options-dropdown {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex; 
+  padding: 10px;
+  z-index: 100;
+  gap: 15px; /* Tạo khoảng cách giữa các nút */
+  min-width: auto; /* Đảm bảo dropdown không quá rộng */
+}
+.post-options-menu img {
+  width: 40px;
+  height: 40px;
+  
+}
+/* Định dạng cho từng mục */
+.options-dropdown a{
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Khoảng cách giữa icon và chữ */
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.options-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Khoảng cách giữa icon và chữ */
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap; /* Đảm bảo nội dung không xuống dòng */
+}
+
+.options-dropdown a:hover
+ {
+  background: #f0f0f0;
+}
+.options-dropdown button:hover {
+  background: #f0f0f0;
+}
+
+ 
+/* test */
 .avatar {
   width: 60px;
   height: 60px;

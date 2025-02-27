@@ -2,15 +2,21 @@ extends ../../layout/default.pug
 include ../../mixin/alert.pug
 block style
     link(rel="stylesheet" href="./css/community.css")
+    <script src="/js/communitycouser/community.js" defer></script>
+
 block main
     +alert-success(5000)
     +alert-error(5000)
     .container(style = "margin-top : 80px ; ")
-        //Đăng bài viết
+        //Dang bai viet
         .block-create-post
             .user-avatar
-                img(src="./img/Avata.png" alt="User Avatar")
-                input.post-input(placeholder="Bạn đang nghĩ gì thế?" readonly)
+                if user && user.avatar
+                    img(src=user.avatar, alt="User Avatar")
+                else
+                    img(src="/img/Avata.png", alt="User Avatar")
+
+                input.post-input(placeholder="Bạn đang nghĩ gì thế?" readonly onclick="openPostPopup()") 
             .post-options
                 .option
                     img(src=" /img/Live.png" alt="Video trực tiếp")
@@ -21,6 +27,25 @@ block main
                 .option
                     img(src=" /img/Mặtcuoi.png" alt="Cảm xúc/hoạt động")
                     span Cảm xúc/hoạt động
+        
+        
+        #postPopup.post-popup(style="display: none;")
+            .popup-content
+                h2 Tạo bài viết
+                form#postForm(action="/community/create-post" method="POST" enctype="multipart/form-data")
+                    .form-group
+                        label(for="caption") Tiêu đề
+                        input#caption(type="text" name="caption" placeholder="Tiêu đề bài viết" required)
+                    .form-group
+                        label(for="desc") Nội dung
+                        textarea#desc(name="desc" placeholder="Bạn đang nghĩ gì?" rows="4" required)
+                    .form-group
+                        label(for="img") Hình ảnh
+                        input#img(type="file" name="img" accept="image/*")
+                    .form-actions
+                        button(type="button" onclick="closePostPopup()") Hủy
+                        button(type="submit") Đăng bài
+
 
         // Duyệt qua tất cả bài viết lấy từ database
         each post in posts
@@ -45,6 +70,21 @@ block main
                             if post.author
                                 img.avatar(src=post.author.avatar, alt="User Avatar")
                                 span.username= post.author.username
+                            // Nút mở menu
+                        .post-options-menu
+                            button.options-btn(onclick="toggleOptionsMenu(this)")
+                                img(src="/img/Dau33.png", alt="Tùy chọn") 
+                            // Menu tùy chọn
+                            //- .options-dropdown(style="display: none;")
+                            //-     a(href=`/community/edit/${post._id}`) Chỉnh sửa bài viết
+                            //-     form(action=`/community/delete/${post._id}` method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa bài viết này không?');")
+                            //-         button(type="submit") Xóa bài viết
+                            
+                            .options-dropdown(style="display: none;")
+                                button(type="button" onclick="openEditPopup('#{post._id}', '#{post.caption}', '#{post.desc}')") Chỉnh sửa bài viết
+                                form(action=`/community/delete/${post._id}` method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa bài viết này không?');")
+                                    button(type="submit") Xóa bài viết
+
 
                         .likes
                             button ❤️
@@ -68,3 +108,7 @@ block main
                                         button.reply Reply
                             else
                                 p Chưa có bình luận nào. Hãy là người đầu tiên bình luận!
+                                button.reply Reply
+
+        
+
