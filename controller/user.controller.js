@@ -2,7 +2,6 @@ import User from '../models/user.model.js';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { getReciverSocketIds, io } from "../socket/socket.js";
-
 // import getDatUri from "../utils/datauri.js";
 // import cloudinary from "../utils/cloudinary.js";
 
