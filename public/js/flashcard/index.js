@@ -228,7 +228,7 @@ $(document).ready(function () {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer YOUR_AUTH_TOKEN', // Thay bằng token thực tế
+                    'Authorization': 'Bearer YOUR_AUTH_TOKEN',
                 },
                 body: JSON.stringify({ question: questionText, outputLang: outputLang }),
             });
@@ -245,4 +245,15 @@ $(document).ready(function () {
             alertDiv.innerHTML = '<p class="text-danger">Đã có lỗi xảy ra. Vui lòng thử lại!</p>';
         }
     });
+
+    const learnBtn = document.getElementById('learn');
+    const choiseContainer = document.getElementById('choise-container');
+    const closeBtn = document.getElementById('closex');
+    if (learnBtn && choiseContainer) {
+        learnBtn.addEventListener('click', () => { choiseContainer.classList.add('show') });
+    } else {
+        console.log('Không tìm thấy phần tử');
+    }
+    closeBtn.addEventListener('click', () => { choiseContainer.classList.remove('show') });
+
 });
