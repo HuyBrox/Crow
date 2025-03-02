@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('#score span').textContent = score;
         document.getElementById('review-results').style.display = 'block';
     });
-
+    //hi
     // Xử lý nút làm lại: tải lại trang
     restartButton.addEventListener('click', function () {
         window.location.reload();
