@@ -1,4 +1,4 @@
-export { openPostPopup, closePostPopup, toggleOptionsMenu, deletePost, editPost };
+export { openPostPopup, closePostPopup, toggleOptionsMenu, deletePost };
 // Popup đăng bài
 function openPostPopup() {
     document.getElementById("postPopup").style.display = "flex";
