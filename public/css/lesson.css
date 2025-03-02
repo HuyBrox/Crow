@@ -1,0 +1,136 @@
+/* ===== Reset CSS ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* ===== Layout Chính ===== */
+.container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    margin-top: 90px;
+}
+
+/* ===== Main Content ===== */
+.main-content {
+    flex: 2;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Video Container ===== */
+.video-container {
+    width: 100%;
+    height: 450px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* ===== Lesson Content ===== */
+.lesson-content {
+    padding: 15px;
+}
+
+.lesson-content h2 {
+    color: #ff6f00;
+    margin-bottom: 10px;
+}
+
+.lesson-content p {
+    font-size: 16px;
+    color: #333;
+}
+
+/* ===== Sidebar (Nội dung khóa học) ===== */
+/* .sidebar {
+    flex: 1;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+} */
+
+.sidebar h3 {
+    color: #ff6f00;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.lesson-list {
+    list-style: none;
+}
+
+.lesson-list li {
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.lesson-list li.active,
+.lesson-list li:hover {
+    background: #ff6f00;
+    color: white;
+    font-weight: bold;
+}
+
+.lesson-list a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .video-container {
+        height: 300px;
+    }
+}
+/* Để sidebar cuộn */
+.sidebar {
+    max-height: 500px; /* Hoặc chiều cao tối đa bạn muốn */
+    overflow-y: auto;  /* Thêm thanh cuộn dọc khi nội dung tràn */
+    overflow-x: hidden; /* Ẩn thanh cuộn ngang nếu không cần */
+  }
+  
+  /* Hoặc nếu chỉ muốn danh sách lesson cuộn */
+  .lesson-list {
+    max-height: 400px; /* Chiều cao tối đa của danh sách */
+    overflow-y: auto;  /* Thanh cuộn dọc */
+    overflow-x: hidden; /* Không cuộn ngang */
+    padding-right: 10px; /* Thêm padding để tránh nội dung bị che bởi scrollbar */
+  }
+.lesson-list::-webkit-scrollbar {
+    width: 8px;
+  }
+.lesson-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+.lesson-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+.lesson-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
