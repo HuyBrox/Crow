@@ -2,8 +2,7 @@ extends ../../layout/default.pug
 include ../../mixin/alert.pug
 block style
     link(rel="stylesheet" href="./css/community.css")
-    <script src="/js/communitycouser/community.js" defer></script>
-
+    
 block main
     +alert-success(5000)
     +alert-error(5000)
@@ -50,7 +49,7 @@ block main
 
         // Duyệt qua tất cả bài viết lấy từ database
         each post in posts
-            .post
+            .post(data-post-id=post._id)
                 .post-header
                     - var postDate = post.createdAt ? new Date(post.createdAt).toLocaleDateString("vi-VN") : "Ngày không hợp lệ";
                     span.date= postDate
@@ -71,25 +70,19 @@ block main
                             if post.author
                                 img.avatar(src=post.author.avatar, alt="User Avatar")
                                 span.username= post.author.username
-                            // Nút mở menu
+                            
                         .post-options-menu
                             button.options-btn(onclick="toggleOptionsMenu(this)")
                                 img(src="/img/Dau33.png", alt="Tùy chọn") 
-                            // Menu tùy chọn
-                            //- .options-dropdown(style="display: none;")
-                            //-     a(href=`/community/edit/${post._id}`) Chỉnh sửa bài viết
-                            //-     form(action=`/community/delete/${post._id}` method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa bài viết này không?');")
-                            //-         button(type="submit") Xóa bài viết
-                            
-                            .options-dropdown(style="display: none;")
-                                button(type="button" onclick="openEditPopup('#{post._id}', '#{post.caption}', '#{post.desc}')") Chỉnh sửa bài viết
-                                form(action=`/community/delete/${post._id}` method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa bài viết này không?');")
-                                    button(type="submit") Xóa bài viết
+                            if user && post.author && user._id.toString() === post.author._id.toString()
+                                .options-dropdown(style="display: none;")
+                                    button.edit-btn(onclick="editPost('" + post._id + "')") Chỉnh sửa
+                                    button.delete-btn(onclick="deletePost('" + post._id + "')") Xóa
 
-
-                        .likes
-                            button ❤️
-                            span= (post.likes && post.likes.length) ? post.likes.length : 0
+                        .likes                          
+                            button.like-btn(data-post-id=post._id class=(user && post.likes && post.likes.includes(user._id)) ? "liked" : "")
+                                span ❤️
+                            span.likes-count= (post.likes && post.likes.length) ? post.likes.length : 0
                             button 💬
                             span= (post.comments && post.comments.length) ? post.comments.length : 0
 
@@ -106,10 +99,18 @@ block main
                                                 - var commentDate = comment.createdAt ? new Date(comment.createdAt).toLocaleDateString("vi-VN") : "Không xác định";
                                                 span.time / #{commentDate}
                                         p= comment.text
-                                        button.reply Reply
+                                        //button.reply Reply
                             else
                                 p Chưa có bình luận nào. Hãy là người đầu tiên bình luận!
-                                button.reply Reply
-
+                            // Khung nhập bình luận luôn hiển thị
+                            .comment-box
+                                if user
+                                    img.avatar(src=user.avatar, alt="User Avatar")
+                                    input.comment-text(type="text" placeholder="Viết bình luận...")
+                                    button.comment-submit Đăng
+//- block script
+    //script(src="./js/communitycouser/community.js" type="module")
+block script
+    <script src="/js/communitycouser/community.js" defer></script>
         
 
