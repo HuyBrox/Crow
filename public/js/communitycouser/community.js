@@ -6,7 +6,6 @@ function openPostPopup() {
 function closePostPopup() {
     document.getElementById("postPopup").style.display = "none";
 }
-
 //menu sua xoa
 function toggleOptionsMenu(button) {
     const menu = button.nextElementSibling;
@@ -20,5 +19,3 @@ document.addEventListener("click", function (event) {
         }
     });
 });
-
-
