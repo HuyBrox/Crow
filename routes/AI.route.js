@@ -160,10 +160,17 @@ router.get('/AI-gen-quiz/:id', requireAuth, async (req, res) => {
             return res.redirect('/flashcards');
         }
 
-        const cardsData = flashcard.cards.map(card => ({
+        // Lấy danh sách cards và trộn ngay tại đây
+        let cardsData = flashcard.cards.map(card => ({
             vocabulary: card.vocabulary,
             meaning: card.meaning,
         }));
+        // Xáo trộn cardsData bằng thuật toán Fisher-Yates
+        for (let i = cardsData.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [cardsData[i], cardsData[j]] = [cardsData[j], cardsData[i]];
+        }
+
         if (cardsData.length === 0) {
             req.flash('error', 'Không có thẻ để gen!');
             return res.redirect(`/flashcards/${id}`);
@@ -173,6 +180,7 @@ router.get('/AI-gen-quiz/:id', requireAuth, async (req, res) => {
 
         // prompt gộp cho tất cả các flashcard
         let prompt = `
+*Must do it correctly without mistakes!
 For each of the following flashcards, generate exactly 3 incorrect meanings for the given word.
 The incorrect meanings must be in the same language as the provided meaning.
 If the provided meaning is in Japanese:

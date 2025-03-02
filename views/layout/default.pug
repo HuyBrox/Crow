@@ -1,5 +1,6 @@
 include ../mixin/alert.pug
 include ../mixin/contact_list.pug
+include ../mixin/keyboard.pug
 doctype html
 html
   head
@@ -26,6 +27,7 @@ html
     if !hasError
       .body
         +contact_list()
+        +key-board()
         include ../partial/header.pug
         .main
           block main

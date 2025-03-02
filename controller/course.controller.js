@@ -82,3 +82,25 @@ export const lessonDetailPage = async (req, res) => {
         res.redirect('back');
     }
 };
+
+export const createLessonTask = async (req, res) => {
+    try {
+        const courseId = req.params.courseId;
+        const apiggsheet = req.params.apiggsheet;
+        const course = await Course.findById(courseId);
+
+        if (!course) {
+            req.flash('error', 'Không tìm thấy khóa học');
+            return res.redirect('/course');
+        }
+        let lesson = new Lesson({ title: "Bài học mới", apiGoogleSheet: apiggsheet, type: "task" });
+        course.lessons.push(lesson);
+        await lesson.save();
+        await course.save();
+        res.render('tạo bài học thành công' + apiggsheet + ' vào khóa học ' + courseId);
+    } catch (error) {
+        console.error(error);
+        req.flash('error', 'Lỗi khi tạo bài học');
+        res.redirect('back');
+    }
+};
