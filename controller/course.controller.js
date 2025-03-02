@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Lesson from "../models/lesson.model.js";
 import Course from "../models/course.model.js";
-
+import { uploadVideo } from "../helper/upload-media.js";
 // [GET] /course - Hiển thị danh sách khóa học
 export const coursePage = async (req, res) => {
     try {
@@ -70,7 +70,7 @@ export const lessonDetailPage = async (req, res) => {
             req.flash('error', 'Bài học không tồn tại.');
             return res.redirect(`/course/${courseId}`);
         }
-        console.log("📢 Lesson from DB:", lesson);
+        console.log(" Lesson from DB:", lesson);
         res.render('page/course/lesson', {
             title: lesson.title,
             lesson: lesson,
@@ -82,3 +82,45 @@ export const lessonDetailPage = async (req, res) => {
         res.redirect('back');
     }
 };
+
+export const createCourse = async (req, res) => {
+    try {
+        const { name, language, decription, price } = req.body;
+        const newCourse = new Course({
+            name,
+            language,
+            decription,
+            price
+        })
+        await newCourse.save();
+        res.status(200).json({ message: 'Thêm khóa học thanh cong' });
+    } catch (error) {
+        res.status(500).json({ error: 'Loi khi tao khóa học' });
+    }
+}
+
+export const addLessonVideo = async (req, res) => {
+    try {
+        const { courseId, title, content } = req.body;
+        const file = req.file;
+
+        if (!file) {
+            return res.status(400).json({ error: 'File is required' });
+        }
+        const videoUrl = await uploadVideo(file);
+        const newLesson = new Lesson({
+            title,
+            type: 'video',
+            content,
+            videoUrl: videoUrl
+        });
+        await newLesson.save();
+        const course = await Course.findById(courseId);
+        course.lessons.push(newLesson._id);
+        await course.save();
+
+        res.status(200).json({ message: 'Them video thanh cong' });
+    } catch (error) {
+        res.status(500).json({ error: 'Loi khi them video' });
+    }
+}
