@@ -1,4 +1,5 @@
-// popup dang bai
+export { openPostPopup, closePostPopup, toggleOptionsMenu, deletePost, editPost };
+// Popup đăng bài
 function openPostPopup() {
     document.getElementById("postPopup").style.display = "flex";
 }
@@ -13,15 +14,7 @@ function toggleOptionsMenu(button) {
     menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-document.addEventListener("click", (event) => {
-    document.querySelectorAll(".options-dropdown").forEach(menu => {
-        if (!menu.parentElement.contains(event.target)) {
-            menu.style.display = "none";
-        }
-    });
-});
-
-// Delete post
+// Xóa bài viết
 function deletePost(postId) {
     if (confirm("Bạn có chắc chắn muốn xóa bài viết này không?")) {
         fetch(`/community/delete/${postId}`, {
@@ -33,7 +26,6 @@ function deletePost(postId) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Xóa bài viết khỏi giao diện
                 const postElement = document.querySelector(`.post[data-post-id="${postId}"]`);
                 if (postElement) {
                     postElement.remove();
@@ -49,9 +41,41 @@ function deletePost(postId) {
     }
 }
 
+// Chỉnh sửa bài viết (chưa hoàn thiện)
+function editPost(postId) {
+    console.log(`Chỉnh sửa bài viết ${postId}`);
+}
 
-// like bai viet
+// Khởi tạo sự kiện khi DOM loaded
 document.addEventListener("DOMContentLoaded", () => {
+    // Mở popup
+    document.getElementById("postInput").addEventListener("click", openPostPopup);
+    
+    // Đóng popup
+    document.querySelectorAll(".cancel-btn").forEach(btn => {
+        btn.addEventListener("click", closePostPopup);
+    });
+
+    // Toggle menu tùy chọn
+    document.querySelectorAll(".options-btn").forEach(btn => {
+        btn.addEventListener("click", () => toggleOptionsMenu(btn));
+    });
+
+    // Đóng menu khi click ngoài
+    document.addEventListener("click", (event) => {
+        document.querySelectorAll(".options-dropdown").forEach(menu => {
+            if (!menu.parentElement.contains(event.target)) {
+                menu.style.display = "none";
+            }
+        });
+    });
+
+    // Xóa bài viết
+    document.querySelectorAll(".delete-btn").forEach(btn => {
+        btn.addEventListener("click", () => deletePost(btn.dataset.postId));
+    });
+
+    // Like bài viết
     document.querySelectorAll(".like-btn").forEach(button => {
         button.addEventListener("click", async () => {
             const postId = button.getAttribute("data-post-id");
@@ -65,11 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const data = await response.json();
                 if (data.success) {
-                    // Cập nhật số lượt like
                     const likesCount = button.nextElementSibling;
                     likesCount.textContent = data.likesCount;
-
-                    // Cập nhật trạng thái nút
                     if (data.hasLiked) {
                         button.classList.add("liked");
                     } else {
@@ -85,3 +106,4 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+

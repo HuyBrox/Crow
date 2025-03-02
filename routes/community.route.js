@@ -6,7 +6,6 @@ import { createPost } from '../controller/community.controller.js';
 import { likePost } from '../controller/community.controller.js';
 //import { upload } from '../middleware/multer.js';
 import { deletePost } from '../controller/community.controller.js';
-import { editPost } from '../controller/community.controller.js';
 
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });

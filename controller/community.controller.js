@@ -13,10 +13,8 @@ export const getCommunity = async (req, res) => {
                 populate: { path: "author", select: "username avatar" } 
             })
             .sort({ createdAt: -1 }) 
-            .exec();
-        //const user = req.session.user || null;
+ 
         console.log("posts", posts);
-        //console.log("user", user);
 
         res.render("./page/community/community", {
             title: "Cộng đồng",
@@ -52,9 +50,8 @@ export const createPost = async (req, res) => {
             });
         
             await newPost.save();
-            
-            res.status(200).json({ message: "Đăng bài thành công!", post: newPost })
             res.redirect('/community');
+            
         } catch (error) {
             console.error('Lỗi đăng bài:', error);
             res.status(500).send('Lỗi máy chủ');
@@ -71,22 +68,11 @@ export const deletePost = async (req, res) => {
         const postId = req.params.postId;
         const userId = req.user._id;
 
-        // Tìm bài viết
-        const post = await Post.findById(postId);
+        const post = await Post.findOneAndDelete({ _id: postId, author: userId });
+
         if (!post) {
-            return res.status(404).json({ message: "Bài viết không tồn tại" });
+            return res.status(404).json({ message: "Bài viết không tồn tại hoặc bạn không có quyền xóa" });
         }
-
-        // Kiểm tra quyền xóa (chỉ tác giả mới được xóa)
-        if (post.author.toString() !== userId.toString()) {
-            return res.status(403).json({ message: "Bạn không có quyền xóa bài viết này" });
-        }
-
-        // Xóa bài viết
-        await Post.findByIdAndDelete(postId);
-
-        // Xóa các bình luận liên quan (nếu cần)
-        //await Comment.deleteMany({ post: postId });
 
         res.json({
             success: true,
@@ -137,41 +123,4 @@ export const likePost = async (req, res) => {
     }
 };
 
-
-
-//edit bai viet
-export const editPost = async (req, res) => {
-    try {
-        if (!req.user) {
-            return res.status(401).json({ message: "Bạn chưa đăng nhập!" });
-        }
-
-        const postId = req.params.postId;
-        const userId = req.user._id;
-
-        const post = await Post.findById(postId);
-        if (!post) {
-            return res.status(404).json({ message: "Bài viết không tồn tại" });
-        }
-
-        // Kiểm tra quyền xóa (chỉ tác giả mới được xóa)
-        if (post.author.toString() !== userId.toString()) {
-            return res.status(403).json({ message: "Bạn không có quyền sửa bài viết này" });
-        }
-
-        const { caption, desc } = req.body;
-
-        post.caption = caption;
-        post.desc = desc;
-
-        await post.save();
-
-        res.json({
-            success: true,
-            message: "Sửa bài viết thanh cong"
-        });        
-    } catch (error) {
-        console.error("Lỗi khi sửa bài viết:", error);
-        res.status(500).json({ message: "Lỗi máy chủ" });
-    }   
-};
+//edit
