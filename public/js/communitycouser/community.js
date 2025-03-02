@@ -41,11 +41,6 @@ function deletePost(postId) {
     }
 }
 
-// Chỉnh sửa bài viết (chưa hoàn thiện)
-function editPost(postId) {
-    console.log(`Chỉnh sửa bài viết ${postId}`);
-}
-
 // Khởi tạo sự kiện khi DOM loaded
 document.addEventListener("DOMContentLoaded", () => {
     // Mở popup
