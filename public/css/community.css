@@ -165,9 +165,6 @@
   color: white;
 }
 
-.popup-content button[type="button"] {
-  background-color: #ccc;
-}
 /* Nút Hủy */
 .popup-content button[type="button"] {
   background-color: #ff4d4d;
@@ -188,6 +185,8 @@
   margin-top: 20px;
 }
 
+
+/* cap noi dung img  */
 .left {
   background: #fdf7f2;
   padding: 15px;
@@ -224,6 +223,8 @@
   object-fit: cover;
   border-radius: 10px;
 }
+
+/* binh luan , avata  */
 
 .right {
   flex: 1;
@@ -294,7 +295,7 @@
   background: #f0f0f0;
 }
  
-/* test */
+/* like */
 .avatar {
   width: 60px;
   height: 60px;
@@ -353,26 +354,7 @@
   border-radius: 50%;
 }
 
-.reply {
-  background: #3d80e6;
-  color: white;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 14px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.reply:hover {
-  background-color: #0056b3;
-}
-
-
 /* Phần  viet bình luận */
-.comments-container {
-  position: relative;
-  padding-bottom: 60px; /* Để chừa không gian cho khung nhập bình luận */
-}
 
 .comment-box {
   display: flex;
