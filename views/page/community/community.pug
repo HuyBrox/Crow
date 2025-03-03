@@ -2,15 +2,21 @@ extends ../../layout/default.pug
 include ../../mixin/alert.pug
 block style
     link(rel="stylesheet" href="./css/community.css")
+    
 block main
     +alert-success(5000)
     +alert-error(5000)
     .container(style = "margin-top : 80px ; ")
-        //Đăng bài viết
+       
+        //Dang bai viet
         .block-create-post
             .user-avatar
-                img(src="./img/Avata.png" alt="User Avatar")
-                input.post-input(placeholder="Bạn đang nghĩ gì thế?" readonly)
+                if user && user.avatar
+                    img(src=user.avatar, alt="User Avatar")
+                else
+                    img(src="/img/Avata.png", alt="User Avatar")
+
+                input.post-input(placeholder="Bạn đang nghĩ gì thế?" readonly onclick="openPostPopup()") 
             .post-options
                 .option
                     img(src=" /img/Live.png" alt="Video trực tiếp")
@@ -21,10 +27,29 @@ block main
                 .option
                     img(src=" /img/Mặtcuoi.png" alt="Cảm xúc/hoạt động")
                     span Cảm xúc/hoạt động
+        
+        
+        #postPopup.post-popup(style="display: none;")
+            .popup-content
+                h2 Tạo bài viết
+                form#postForm(action="/community/create-post" method="POST" enctype="multipart/form-data")
+                    .form-group
+                        label(for="caption") Tiêu đề
+                        input#caption(type="text" name="caption" placeholder="Tiêu đề bài viết" required)
+                    .form-group
+                        label(for="desc") Nội dung
+                        textarea#desc(name="desc" placeholder="Bạn đang nghĩ gì?" rows="4" required)
+                    .form-group
+                        label(for="img") Hình ảnh
+                        input#img(type="file" name="img" accept="image/*")
+                    .form-actions
+                        button(type="button" onclick="closePostPopup()") Hủy
+                        button(type="submit") Đăng bài
+
 
         // Duyệt qua tất cả bài viết lấy từ database
         each post in posts
-            .post
+            .post(data-post-id=post._id)
                 .post-header
                     - var postDate = post.createdAt ? new Date(post.createdAt).toLocaleDateString("vi-VN") : "Ngày không hợp lệ";
                     span.date= postDate
@@ -45,10 +70,19 @@ block main
                             if post.author
                                 img.avatar(src=post.author.avatar, alt="User Avatar")
                                 span.username= post.author.username
+                            
+                        .post-options-menu
+                            button.options-btn(onclick="toggleOptionsMenu(this)")
+                                img(src="/img/Dau33.png", alt="Tùy chọn") 
+                            if user && post.author && user._id.toString() === post.author._id.toString()
+                                .options-dropdown(style="display: none;")
+                                    button.edit-btn(onclick="editPost('" + post._id + "')") Chỉnh sửa
+                                    button.delete-btn(onclick="deletePost('" + post._id + "')") Xóa
 
-                        .likes
-                            button ❤️
-                            span= (post.likes && post.likes.length) ? post.likes.length : 0
+                        .likes                          
+                            button.like-btn(data-post-id=post._id class=(user && post.likes && post.likes.includes(user._id)) ? "liked" : "")
+                                span ❤️
+                            span.likes-count= (post.likes && post.likes.length) ? post.likes.length : 0
                             button 💬
                             span= (post.comments && post.comments.length) ? post.comments.length : 0
 
@@ -65,6 +99,18 @@ block main
                                                 - var commentDate = comment.createdAt ? new Date(comment.createdAt).toLocaleDateString("vi-VN") : "Không xác định";
                                                 span.time / #{commentDate}
                                         p= comment.text
-                                        button.reply Reply
+                                        //button.reply Reply
                             else
                                 p Chưa có bình luận nào. Hãy là người đầu tiên bình luận!
+                            // Khung nhập bình luận luôn hiển thị
+                            .comment-box
+                                if user
+                                    img.avatar(src=user.avatar, alt="User Avatar")
+                                    input.comment-text(type="text" placeholder="Viết bình luận...")
+                                    button.comment-submit Đăng
+//- block script
+    //script(src="./js/communitycouser/community.js" type="module")
+block script
+    <script src="/js/communitycouser/community.js" defer></script>
+        
+

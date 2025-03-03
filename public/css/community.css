@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+  
 .container {
   width: 100%;
   margin: auto;
@@ -88,6 +88,96 @@
   font-weight: bold;
   text-decoration: none;
 }
+/* popup dăng bài */
+
+/* Ẩn popup mặc định */
+.post-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Nội dung của popup */
+.popup-content {
+  background: white;
+  width: 900px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+  border: 3px solid #d47843;
+}
+
+/* Nút đóng popup */
+.popup-content h2 {
+  color: #c58338; 
+  margin-bottom: 15px;
+}
+
+.popup-content .form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.popup-content label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.popup-content input,
+.popup-content textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.popup-content input[type="file"] {
+  border: none;
+}
+
+/* Nút tat mo */
+.popup-content .form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.popup-content button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+/* Nut dang */
+.popup-content button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+}
+
+.popup-content button[type="button"] {
+  background-color: #ccc;
+}
+/* Nút Hủy */
+.popup-content button[type="button"] {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.popup-content button[type="button"]:hover {
+  background-color: #cc0000;
+}
+
 
 /* Noi dung bai */
 .post-content {
@@ -103,6 +193,8 @@
   padding: 15px;
   border-radius: 10px;
   flex: 1;
+  width: 100%; 
+  height: 650px;
 }
 
 .left h2 {
@@ -116,8 +208,20 @@
   color: #717171;
 }
 
+.post-image {
+  width: 100%; 
+  height: 540px; 
+  overflow: hidden; 
+  border-radius: 10px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .post-image img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 10px;
 }
 
@@ -126,6 +230,9 @@
   background: #fdf7f2;
   padding: 15px;
   border-radius: 10px;
+  width: 100%; 
+  height: 650px; 
+  position: relative; /* Để đặt phần tử con có position absolute */
 }
 
 .user-profile {
@@ -134,6 +241,60 @@
   gap: 10px;
 }
 
+/* nut tuy chon
+ */
+
+/* Định dạng nút tùy chọn */
+.post-options-menu {
+  position: absolute;
+  top: 10px; /* Cách mép trên của bài viết */
+  right: 10px; /* Cách mép phải của bài viết */
+}
+
+.options-btn {
+  background: none; 
+  border: none; 
+  cursor: pointer;
+  padding: 5px; 
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+}
+
+.options-dropdown {
+  position: absolute;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+.post-options-menu img {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.edit-btn, .delete-btn {
+  display: block;
+  width: 100px;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background: #f0f0f0;
+}
+
+.delete-btn:hover {
+  background: #f0f0f0;
+}
+ 
+/* test */
 .avatar {
   width: 60px;
   height: 60px;
@@ -162,9 +323,10 @@
   color: red;
 }
 
+
 /* Phần Bình luận */
 .comments {
-  max-height: 540px; 
+  max-height: 500px; 
   overflow-y: auto;
   padding: 10px;
   border-radius: 8px;
@@ -202,6 +364,59 @@
 }
 
 .reply:hover {
+  background-color: #0056b3;
+}
+
+
+/* Phần  viet bình luận */
+.comments-container {
+  position: relative;
+  padding-bottom: 60px; /* Để chừa không gian cho khung nhập bình luận */
+}
+
+.comment-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background: #fdf7f2;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.comment-box .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.comment-box .comment-text {
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+}
+
+.comment-box .comment-text:focus {
+  border-color: #007bff;
+}
+
+.comment-box .comment-submit {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.comment-box .comment-submit:hover {
   background-color: #0056b3;
 }
 
