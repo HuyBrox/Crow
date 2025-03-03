@@ -163,7 +163,7 @@ export const getHome = async (req, res) => {
 
 
 };
-<<<<<<< HEAD
+
 //profile
 export const getprofile = (req, res) => {
     res.render('./page/profile/profile', {
@@ -272,5 +272,4 @@ export const getProfile = async (req, res) => {
         res.redirect('/');
     }
 }
-=======
->>>>>>> 541b71e55c5574ded86519a58f48cb75ab2739d7
+
