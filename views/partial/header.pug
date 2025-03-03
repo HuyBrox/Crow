@@ -28,7 +28,7 @@ header.header
           a.btn.btn-login(href='/login') Đăng nhập
         else if user != null
           .user-info.d-flex.align-items-center
-            .mini-profile
+            a.mini-profile(href='/profile')
               input.hidden.userId#currentUserI(type="hidden" value=user._id)
               img(src=user.avatar alt='Avatar' width='40' height='40').avatar
               span.username(style="margin-left: 10px;") #{user.username}
