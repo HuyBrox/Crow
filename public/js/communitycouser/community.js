@@ -30,22 +30,22 @@ function deletePost(postId) {
                 "Content-Type": "application/json",
             },
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Xóa bài viết khỏi giao diện
-                const postElement = document.querySelector(`.post[data-post-id="${postId}"]`);
-                if (postElement) {
-                    postElement.remove();
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Xóa bài viết khỏi giao diện
+                    const postElement = document.querySelector(`.post[data-post-id="${postId}"]`);
+                    if (postElement) {
+                        postElement.remove();
+                    }
+                } else {
+                    alert(data.message || "Có lỗi khi xóa bài viết");
                 }
-            } else {
-                alert(data.message || "Có lỗi khi xóa bài viết");
-            }
-        })
-        .catch(error => {
-            console.error("Lỗi khi xóa bài viết:", error);
-            alert("Không thể thực hiện hành động này");
-        });
+            })
+            .catch(error => {
+                console.error("Lỗi khi xóa bài viết:", error);
+                alert("Không thể thực hiện hành động này");
+            });
     }
 }
 
@@ -85,3 +85,27 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+
+function editPost(postId) {
+    fetch(`/community/get-post/${postId}`)
+        .then(response => response.json())
+        .then(post => {
+            if (post.success) {
+                document.getElementById("editCaption").value = post.data.caption;
+                document.getElementById("editDesc").value = post.data.desc;
+                document.getElementById("editPostId").value = postId;
+                document.getElementById("editPostPopup").style.display = "flex";
+            } else {
+                alert("Không tìm thấy bài viết");
+            }
+        })
+        .catch(error => {
+            console.error("Lỗi khi tải bài viết:", error);
+            alert("Có lỗi xảy ra");
+        });
+}
+
+function closeEditPostPopup() {
+    document.getElementById("editPostPopup").style.display = "none";
+}

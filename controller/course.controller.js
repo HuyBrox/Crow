@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Lesson from "../models/lesson.model.js";
 import Course from "../models/course.model.js";
-import { uploadVideo } from "../helper/upload-media.js";
+import { uploadVideo, deleteMediaById } from "../helper/upload-media.js";
 // [GET] /course - Hiển thị danh sách khóa học
 export const coursePage = async (req, res) => {
     try {
@@ -124,3 +124,43 @@ export const addLessonVideo = async (req, res) => {
         res.status(500).json({ error: 'Loi khi them video' });
     }
 }
+export const deleteLesson = async (req, res) => {
+    try {
+        const { courseId, lessonId } = req.params;
+
+        // Tìm và xóa bài học
+        const lesson = await Lesson.findByIdAndDelete(lessonId);
+        if (!lesson) {
+            return res.status(404).json({ error: 'Bài học không tồn tại' });
+        }
+
+        // Cập nhật danh sách bài học trong khóa học
+        await Course.findByIdAndUpdate(courseId, { $pull: { lessons: lessonId } });
+
+        res.status(200).json({ message: 'Xóa bài học thành công' });
+    } catch (error) {
+        res.status(500).json({ error: 'Lỗi khi xóa bài học' });
+    }
+};
+
+export const deleteCourse = async (req, res) => {
+    try {
+        const { courseId } = req.params;
+
+        // Tìm và xóa khóa học
+        const course = await Course.findByIdAndDelete(courseId);
+
+
+        if (!course) {
+            return res.status(404).json({ error: 'Khóa học không tồn tại' });
+        }
+
+        // Xóa tất cả bài học liên quan
+        await Lesson.deleteMany({ _id: { $in: course.lessons } });
+
+        res.status(200).json({ message: 'Xóa khóa học thành công' });
+    } catch (error) {
+        res.status(500).json({ error: 'Lỗi khi xóa khóa học' });
+    }
+};
+
