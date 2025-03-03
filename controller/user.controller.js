@@ -2,8 +2,6 @@ import User from '../models/user.model.js';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { getReciverSocketIds, io } from "../socket/socket.js";
-import Post from '../models/post.model.js';
-import Comment from '../models/comment.model.js';
 // import getDatUri from "../utils/datauri.js";
 // import cloudinary from "../utils/cloudinary.js";
 import Course from '../models/course.model.js';
@@ -160,7 +158,12 @@ export const getHome = async (req, res) => {
     res.render('./page/home/home', {
         title: 'Trang chủ',
     });
+
+
+
+
 };
+<<<<<<< HEAD
 //profile
 export const getprofile = (req, res) => {
     res.render('./page/profile/profile', {
@@ -269,3 +272,5 @@ export const getProfile = async (req, res) => {
         res.redirect('/');
     }
 }
+=======
+>>>>>>> 541b71e55c5574ded86519a58f48cb75ab2739d7
