@@ -34,12 +34,12 @@ document.addEventListener('DOMContentLoaded', function () {
     let selectedAnswers = new Array(questions.length).fill(null);
     let quizResults = [];
     let isQuizSubmitted = false;
-    let timeLeft = 15 * 60; // 15 minutes in seconds
+    let timeLeft = 10 * 60;
     let timerInterval;
 
-    // Quiz object with methods
+
     const quiz = {
-        // Initialize quiz
+
         init() {
             this.renderQuestionList();
             this.renderCurrentQuestion();
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.updateProgressCircle();
         },
 
-        // Render list of question numbers
+
         renderQuestionList() {
             quizQuestionList.innerHTML = questions.map((_, index) => {
                 let className = '';
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return `<li class="${className}">${index + 1}</li>`;
             }).join('');
 
-            // Add click event to question number list
+
             const questionNumberItems = quizQuestionList.querySelectorAll('li');
             questionNumberItems.forEach((item, index) => {
                 item.addEventListener('click', () => {
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         },
 
-        // Render current question
+
         renderCurrentQuestion() {
             if (questions.length === 0 || currentIndex >= questions.length) return;
 
@@ -77,30 +77,30 @@ document.addEventListener('DOMContentLoaded', function () {
             quizCount.innerText = `Question ${currentIndex + 1} of ${questions.length}`;
             quizTitle.innerText = currentQuestion.question;
 
-            // Render answers
+
             quizAnswersItem.forEach((answer, index) => {
                 answer.innerText = currentQuestion.answers[index];
             });
 
-            // Reset and highlight answers
+
             quizAnswers.forEach((answer, index) => {
                 answer.classList.remove('active', 'incorrect');
 
                 if (isQuizSubmitted) {
-                    // Highlight correct and incorrect answers after submission
+
                     const currentResult = quizResults[currentIndex];
                     if (currentResult) {
                         const correctAnswerIndex = currentResult.correctAnswer;
                         const selectedAnswerIndex = currentResult.selectedAnswer;
 
                         if (index === correctAnswerIndex) {
-                            answer.classList.add('active'); // Correct answer in orange
+                            answer.classList.add('active');
                         }
 
                         if (selectedAnswerIndex !== null &&
                             selectedAnswerIndex !== correctAnswerIndex &&
                             index === selectedAnswerIndex) {
-                            answer.classList.add('incorrect'); // Incorrect selected answer in red
+                            answer.classList.add('incorrect');
                         }
                     }
                 } else if (selectedAnswers[currentIndex] === index) {
@@ -111,14 +111,14 @@ document.addEventListener('DOMContentLoaded', function () {
             this.updateQuestionListHighlight();
         },
 
-        // Update question list to highlight completed and current questions
+
         updateQuestionListHighlight() {
             const questionNumberItems = quizQuestionList.querySelectorAll('li');
             questionNumberItems.forEach((item, index) => {
                 item.classList.remove('active', 'selected', 'incorrect');
 
                 if (isQuizSubmitted && quizResults[index]) {
-                    // Mark incorrect questions after submission
+
                     const currentResult = quizResults[index];
                     if (currentResult.selectedAnswer !== null &&
                         !currentResult.isCorrect) {
@@ -136,9 +136,9 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         },
 
-        // Setup event listeners
+
         setupEventListeners() {
-            // Answer selection
+
             quizAnswers.forEach((answer, index) => {
                 answer.addEventListener('click', () => {
                     if (isQuizSubmitted) return;
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             });
 
-            // Navigation buttons
+
             quizPrev.addEventListener('click', () => {
                 if (currentIndex > 0) {
                     currentIndex--;
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            // Submit button
+
             quizSubmit.addEventListener('click', () => {
                 if (!isQuizSubmitted) {
                     this.submitQuiz();
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         },
 
-        // Update progress circle before submission
+
         updateProgressCircle() {
             const completedQuestions = selectedAnswers.filter(answer => answer !== null).length;
             const r = quizProgress.getAttribute('r');
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
             timerInterval = setInterval(updateTimer, 1000);
         },
 
-        // Submit quiz and calculate results
+
         submitQuiz() {
             clearInterval(timerInterval);
             isQuizSubmitted = true;
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 };
             });
 
-            // Update progress circle to show correct answers
+
             const r = quizProgress.getAttribute('r');
             const circumference = 2 * Math.PI * r;
 
