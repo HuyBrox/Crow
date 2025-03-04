@@ -85,22 +85,41 @@ export const lessonDetailPage = async (req, res) => {
 
 export const createLessonTask = async (req, res) => {
     try {
-        const courseId = req.params.courseId;
-        const apiggsheet = req.params.apiggsheet;
+        const { courseId, title, content, jsonTask } = req.body;
         const course = await Course.findById(courseId);
-
         if (!course) {
-            req.flash('error', 'Không tìm thấy khóa học');
-            return res.redirect('/course');
+            res.status(404).json({ error: 'Không tìm thấy khóa học' });
         }
-        let lesson = new Lesson({ title: "Bài học mới", apiGoogleSheet: apiggsheet, type: "task" });
-        course.lessons.push(lesson);
+        const lesson = new Lesson({
+            title,
+            type: 'task',
+            content,
+            jsonTask,
+        });
         await lesson.save();
+        course.lessons.push(lesson);
         await course.save();
-        res.render('tạo bài học thành công' + apiggsheet + ' vào khóa học ' + courseId);
+        return res.status(201).json({ message: 'Tạo khóa học thành công', lesson });
+
+
+    } catch (error) {
+        res.status(500).json({ error: 'Lỗi server' });
+    }
+};
+
+export const createCourse = async (req, res) => {
+    try {
+        const { name, language, description, price } = req.body;
+        const course = new Course({
+            name,
+            language,
+            description,
+            price,
+        });
+        await course.save();
+        return res.status(201).json({ message: 'Tạo khóa học thành công' }, course);
     } catch (error) {
         console.error(error);
-        req.flash('error', 'Lỗi khi tạo bài học');
-        res.redirect('back');
+        res.status(500).json({ error: 'Lỗi server' });
     }
 };
