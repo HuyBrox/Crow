@@ -41,7 +41,7 @@ block main
                         label(for="desc") Nội dung
                         textarea#desc(name="desc" placeholder="Bạn đang nghĩ gì?" rows="4" required)
                     .form-group
-                        label(for="img") Hình ảnh
+                        label(for="img") Hinh ảnh
                         input#img(type="file" name="img" accept="image/*")
                     .form-actions
                         button.cancel-btn(type="button") Hủy
@@ -87,7 +87,7 @@ block main
                             span= (post.comments && post.comments.length) ? post.comments.length : 0
 
                         .comments
-                            if post.comments && post.comments.length
+                            if post.comments && post.comments.length > 0
                                 each comment in post.comments
                                     .comment
                                         .user-info
@@ -99,7 +99,7 @@ block main
                                                 span.time / #{commentDate}
                                         p= comment.text
                             else
-                                p Chưa có bình luận nào. Hãy là người đầu tiên bình luận!
+                                p Chưa có bình luận nào hãy là người đầu tiên bình luận!
                             .comment-box
                                 if user
                                     img.avatar(src=user.avatar, alt="User Avatar")

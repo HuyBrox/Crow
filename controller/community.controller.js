@@ -1,11 +1,10 @@
 import Post from '../models/post.model.js'; 
 import Comment from '../models/comment.model.js';
-import {  uploadImage } from '../helper/upload-media.js';
+import {  uploadImage, deleteMediaById } from '../helper/upload-media.js';
 
 // Hiển thị trang cộng đồng
 export const getCommunity = async (req, res) => {
     try {
-        // Lay bai viet
         const posts = await Post.find()
             .populate("author", "username avatar") 
             .populate({
@@ -15,6 +14,7 @@ export const getCommunity = async (req, res) => {
             .sort({ createdAt: -1 }) 
  
         console.log("posts", posts);
+        
 
         res.render("./page/community/community", {
             title: "Cộng đồng",
@@ -50,6 +50,7 @@ export const createPost = async (req, res) => {
             });
         
             await newPost.save();
+            console.log("Bài viết tạo thành cong");
             res.redirect('/community');
             
         } catch (error) {
@@ -68,12 +69,23 @@ export const deletePost = async (req, res) => {
         const postId = req.params.postId;
         const userId = req.user._id;
 
-        const post = await Post.findOneAndDelete({ _id: postId, author: userId });
+        const post = await Post.findOne({ _id: postId, author: userId });
 
         if (!post) {
             return res.status(404).json({ message: "Bài viết không tồn tại hoặc bạn không có quyền xóa" });
         }
+        try {
+            await deleteMediaById(post.img, "image");
+            console.log("Xóa hình ảnh");
+        } catch (error) {
+            console.error("Lỗi khi xóa hình ảnh:", error);
+        }
 
+        await Comment.deleteMany({ post: postId });
+        console.log("Xóa tất cả bình luận của bài viết");
+
+        await Post.deleteOne({ _id: postId });
+        console.log("Xóa bài viết");
         res.json({
             success: true,
             message: "Xóa bài viết thành công"
@@ -83,6 +95,49 @@ export const deletePost = async (req, res) => {
         res.status(500).json({ message: "Lỗi máy chủ" });
     }
 };
+
+//sua bai viet
+export const editPost = async (req, res) => {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ message: "Bạn chưa đăng nhập!" });
+        }
+
+        const postId = req.params.postId;
+        const userId = req.user._id;
+        const { caption, desc } = req.body;
+
+        const post = await Post.findOne({ _id: postId, author: userId });
+        if (!post) {
+            return res.status(404).json({ 
+                success: false,
+                message: "Bài viết không tồn tại hoặc bạn không có quyền chỉnh sửa" 
+            });
+        }
+
+        if (caption !== undefined) post.caption = caption;
+        if (desc !== undefined) post.desc = desc;
+        
+        console.log("Sua Thanh cong");
+        await post.save();
+
+        res.json({
+            success: true,
+            message: "Cập nhật bài viết thành công",
+            post: {
+                caption: post.caption,
+                desc: post.desc
+            }
+        });
+    } catch (error) {
+        console.error("Lỗi khi chỉnh sửa bài viết:", error);
+        res.status(500).json({ 
+            success: false,
+            message: "Lỗi máy chủ" 
+        });
+    }
+};
+
 
 // like bai viet
 export const likePost = async (req, res) => {
@@ -99,14 +154,10 @@ export const likePost = async (req, res) => {
             return res.status(404).json({ message: "Bài viết không tồn tại" });
         }
 
-        // Kiểm tra xem user đã like chưa
         const hasLiked = post.likes.includes(userId);
-
         if (hasLiked) {
-            // Nếu đã like, xóa like
             post.likes = post.likes.filter(id => id.toString() !== userId.toString());
         } else {
-            // Nếu chưa like, thêm like
             post.likes.push(userId);
         }
 
@@ -115,7 +166,7 @@ export const likePost = async (req, res) => {
         res.json({
             success: true,
             likesCount: post.likes.length,
-            hasLiked: !hasLiked // Trả về trạng thái mới
+            hasLiked: !hasLiked 
         });
     } catch (error) {
         console.error("Lỗi khi like bài viết:", error);
@@ -123,4 +174,57 @@ export const likePost = async (req, res) => {
     }
 };
 
-//edit
+//comment bai viet
+export const createComment = async (req, res) => {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ message: "Bạn chưa đăng nhập!" });
+        }
+
+        const postId = req.params.postId;
+        const userId = req.user._id;
+        const { text } = req.body;
+
+        if (!text || text.trim() === "") {
+            return res.status(400).json({ message: "Nội dung bình luận không được để trống" });
+        }
+
+        
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ message: "Bài viết không tồn tại" });
+        }
+
+        const newComment = new Comment({
+            text,
+            author: userId,
+            post: postId,
+        });
+
+        await newComment.save();
+
+        post.comments.push(newComment._id);
+        await post.save();
+
+        // Populate thông tin author để trả về
+        const populatedComment = await Comment.findById(newComment._id)
+            .populate("author", "username avatar");
+
+        res.json({
+            success: true,
+            message: "Đã thêm bình luận thành công",
+            comment: {
+                _id: populatedComment._id,
+                text: populatedComment.text,
+                author: {
+                    username: populatedComment.author.username,
+                    avatar: populatedComment.author.avatar,
+                },
+                createdAt: populatedComment.createdAt,
+            },
+        });
+    } catch (error) {
+        console.error("Lỗi khi thêm bình luận:", error);
+        res.status(500).json({ message: "Lỗi máy chủ" });
+    }
+};
