@@ -271,5 +271,5 @@ export const getProfile = async (req, res) => {
         req.flash('error', 'Đã xảy ra lỗi!');
         res.redirect('/');
     }
-}
+};
 

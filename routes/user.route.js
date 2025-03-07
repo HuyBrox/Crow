@@ -6,7 +6,7 @@ import {
     getListUser,
     getProfile
 } from '../controller/user.controller.js';
-import { auth, requireAuth } from '../middleware/auth.js';
+import { auth, requireAuth } from '../middleware/auth.js'; 
 
 
 

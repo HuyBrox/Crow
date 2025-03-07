@@ -1,5 +1,6 @@
 import multer from 'multer';
 
+
 // Cấu hình multer để lưu tệp vào bộ nhớ (RAM) và giới hạn dung lượng file tối đa là 50MB
 const upload = multer({
     storage: multer.memoryStorage(),  // Lưu tệp vào bộ nhớ (RAM) thay vì ổ đĩa
@@ -18,4 +19,4 @@ const upload = multer({
     }
 });
 
-export default upload;
+

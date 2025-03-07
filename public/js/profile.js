@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     const user = document.getElementById('user');
     const imgQuocKy = document.getElementById('quocKy');
@@ -25,5 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
             break;
     }
 });
-/*editor chỉnh sửa*/
+
+// chuc nang chinh sua
 
