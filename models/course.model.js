@@ -34,7 +34,11 @@ const CourseSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Lesson',
         },
-    ]
+    ],
+    thumbnail: {
+        type: String, // Lưu URL hoặc đường dẫn file
+        required: false, // Không bắt buộc
+    }
 
 }, { timestamps: true });
 

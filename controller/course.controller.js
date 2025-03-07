@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Lesson from "../models/lesson.model.js";
 import Course from "../models/course.model.js";
-import { uploadVideo, deleteMediaById } from "../helper/upload-media.js";
+import { uploadVideo, uploadImage, deleteMediaById } from "../helper/upload-media.js";
 // [GET] /course - Hiển thị danh sách khóa học
 export const coursePage = async (req, res) => {
     try {
@@ -56,25 +56,28 @@ export const courseDetailPage = async (req, res) => {
 export const lessonDetailPage = async (req, res) => {
     try {
         const { courseId, lessonId } = req.params;
+        const userId = req.user._id;
 
-        // Tìm khóa học có danh sách bài học
         const course = await Course.findById(courseId).populate("lessons");
         if (!course) {
             req.flash('error', 'Khóa học không tồn tại.');
             return res.redirect('/course');
         }
 
-        // Tìm bài học theo ID
         const lesson = course.lessons.find(lesson => lesson._id.toString() === lessonId);
         if (!lesson) {
             req.flash('error', 'Bài học không tồn tại.');
             return res.redirect(`/course/${courseId}`);
         }
-        console.log(" Lesson from DB:", lesson);
+
+        const userNote = lesson.notes.find(note => note.userId.toString() === userId.toString());
+
+        console.log("Lesson from DB:", lesson); // Debug để xem lesson có type không
         res.render('page/course/lesson', {
             title: lesson.title,
             lesson: lesson,
-            course: course
+            course: course,
+            userNote: userNote ? userNote.content : ''
         });
     } catch (error) {
         console.error(error);
@@ -83,21 +86,70 @@ export const lessonDetailPage = async (req, res) => {
     }
 };
 
+export const saveLessonNote = async (req, res) => {
+    try {
+        const { courseId, lessonId } = req.params;
+        const { noteContent } = req.body;
+        const userId = req.user._id; // Lấy từ middleware auth
+
+        const course = await Course.findById(courseId).populate("lessons");
+        if (!course) {
+            return res.status(404).json({ error: 'Khóa học không tồn tại' });
+        }
+
+        const lesson = await Lesson.findById(lessonId);
+        if (!lesson) {
+            return res.status(404).json({ error: 'Bài học không tồn tại' });
+        }
+
+        // Tìm ghi chú cũ của user
+        const existingNoteIndex = lesson.notes.findIndex(note => note.userId.toString() === userId.toString());
+        if (existingNoteIndex >= 0) {
+            // Cập nhật ghi chú cũ
+            lesson.notes[existingNoteIndex].content = noteContent;
+        } else {
+            // Thêm ghi chú mới
+            lesson.notes.push({ userId, content: noteContent });
+        }
+
+        await lesson.save();
+        res.redirect(`/course/${courseId}/lesson/${lessonId}`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Lỗi khi lưu ghi chú' });
+    }
+};
+// [POST] /course/create
 export const createCourse = async (req, res) => {
     try {
-        const { name, language, decription, price } = req.body;
+        const { name, language, description, price } = req.body;
+        const file = req.file;
+
+        if (!file) {
+            return res.status(400).json({ error: 'File is required' });
+        }
+
+        const thumbnailUrl = await uploadImage(file);
+
         const newCourse = new Course({
             name,
             language,
-            decription,
-            price
-        })
+            description,
+            price,
+            thumbnail: thumbnailUrl,
+        });
+
         await newCourse.save();
-        res.status(200).json({ message: 'Thêm khóa học thanh cong' });
+        res.status(200).json({ message: 'Thêm khóa học thành công' });
+        // , course: newCourse
     } catch (error) {
-        res.status(500).json({ error: 'Loi khi tao khóa học' });
+        console.error("🚨 Lỗi tạo khóa học:", error); // In lỗi ra console
+        res.status(500).json({ error: 'Lỗi khi tạo khóa học' });
+        //  details: error.message 
     }
-}
+};
+
+
 
 export const addLessonVideo = async (req, res) => {
     try {
@@ -129,12 +181,19 @@ export const deleteLesson = async (req, res) => {
         const { courseId, lessonId } = req.params;
 
         // Tìm và xóa bài học
-        const lesson = await Lesson.findByIdAndDelete(lessonId);
+        const lesson = await Lesson.findById(lessonId);
         if (!lesson) {
             return res.status(404).json({ error: 'Bài học không tồn tại' });
         }
-
-        // Cập nhật danh sách bài học trong khóa học
+        const mediaPromises = [];
+        if (lesson.videoPublicId) {
+            mediaPromises.push(
+                deleteMediaById(lesson.videoPublicId, 'video')
+                    .catch(err => console.error('Error deleting video:', err))
+            );
+        }
+        await Promise.all(mediaPromises);
+        await Lesson.findByIdAndDelete(lessonId);
         await Course.findByIdAndUpdate(courseId, { $pull: { lessons: lessonId } });
 
         res.status(200).json({ message: 'Xóa bài học thành công' });
@@ -148,7 +207,7 @@ export const deleteCourse = async (req, res) => {
         const { courseId } = req.params;
 
         // Tìm và xóa khóa học
-        const course = await Course.findByIdAndDelete(courseId);
+        const course = await Course.findById(courseId);
 
 
         if (!course) {

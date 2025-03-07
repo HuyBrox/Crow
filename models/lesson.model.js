@@ -19,7 +19,22 @@ const lessonSchema = new mongoose.Schema({
     ,
     videoUrl: {
         type: String,
-    }
+    },
+    notes: [{
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User', // Tham chiếu đến model User
+            required: true,
+        },
+        content: {
+            type: String,
+            default: '',
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        }
+    }]
 });
 const Lesson = mongoose.model(`Lesson`, lessonSchema);
 export default Lesson;

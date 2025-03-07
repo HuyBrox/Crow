@@ -3,154 +3,389 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Inter', sans-serif;
+    /* Font hiện đại */
+}
+
+/* ===== Variables ===== */
+:root {
+    --primary-color: #ff7043;
+    /* Cam cháy nhẹ, đậm vừa phải, dễ nhìn */
+    --secondary-color: #f1f5f9;
+    /* Nền xám nhạt sạch sẽ */
+    --text-color: #0f172a;
+    /* Xanh đen đậm sắc nét */
+    --bg-white: #ffffff;
+    /* Trắng tinh khôi */
+    --accent-color: #1e293b;
+    /* Xanh đen nhạt hiện đại */
+    --border-radius: 18px;
+    /* Bo góc lớn, mềm mại */
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    /* Bóng nhẹ nhàng */
+    --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.1);
+    /* Bóng hover nổi bật */
+    --gradient-primary: linear-gradient(130deg, #ff7043, #ff9e80);
+    /* Gradient cam nhẹ nhàng */
+    --gradient-bg: linear-gradient(145deg, #f4f8fc, #e2e8f0);
+    /* Gradient nền nhẹ */
 }
 
 /* ===== Layout Chính ===== */
 .container {
+    max-width: 1400px;
     display: flex;
-    gap: 20px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    margin-top: 90px;
+    gap: 35px;
+    padding: 35px;
+    background: var(--gradient-bg);
+    margin: 100px auto;
+    min-height: calc(100vh - 100px);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
 }
 
 /* ===== Main Content ===== */
 .main-content {
     flex: 2;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: var(--bg-white);
+    padding: 35px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.35s cubic-bezier(0.2, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.main-content:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
 }
 
 /* ===== Video Container ===== */
 .video-container {
     width: 100%;
     aspect-ratio: 16 / 9;
-    /* Đảm bảo tỷ lệ khung hình cố định */
-    height: 450px;
-    background-color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
+    background: #0a0f1a;
+    border-radius: var(--border-radius);
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-bottom: 35px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transition: transform 0.35s ease;
+}
+
+.video-container:hover {
+    transform: scale(1.02);
 }
 
 .video-container video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 10px;
-    filter: contrast(1.2) saturate(1.1);
+    transition: filter 0.35s ease;
+}
+
+.video-container:hover video {
+    filter: brightness(1.1) contrast(1.15) saturate(1.1);
 }
 
 /* ===== Lesson Content ===== */
 .lesson-content {
-    padding: 15px;
+    padding: 30px;
+    background: var(--bg-white);
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
 }
 
 .lesson-content h2 {
-    color: #ff6f00;
-    margin-bottom: 10px;
+    color: var(--accent-color);
+    /* Dùng màu đặc thay gradient */
+    margin-bottom: 20px;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.lesson-content h2:hover {
+    color: var(--primary-color);
+    /* Đổi màu khi hover */
+}
+
+.lesson-content h2::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--gradient-primary);
+    border-radius: 1px;
+    transition: width 0.3s ease;
+}
+
+.lesson-content h2:hover::after {
+    width: 60px;
+    /* Kéo dài gạch chân khi hover */
 }
 
 .lesson-content p {
+    font-size: 17px;
+    color: var(--text-color);
+    line-height: 1.9;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+/* Social Links */
+.lesson-content ul {
+    list-style: none;
+    margin: 25px 0;
+}
+
+.lesson-content ul li {
+    margin: 14px 0;
     font-size: 16px;
-    color: #333;
+    color: var(--text-color);
+    position: relative;
+    padding-left: 25px;
 }
 
-.lesson-list li {
-    padding: 10px;
-    border-radius: 5px;
-    transition: background 0.3s, transform 0.2s;
+.lesson-content ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-size: 16px;
 }
 
-.lesson-list li:hover {
-    background: #ff6f00;
+.lesson-content ul li a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.lesson-content ul li a:hover {
+    color: #ff9e80;
+    transform: translateX(5px);
+}
+
+/* ===== Lesson Actions ===== */
+.lesson-actions {
+    margin-top: 30px;
+}
+
+.note-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: var(--gradient-primary);
     color: white;
-    font-weight: bold;
-    transform: scale(1.05);
-    /* Hiệu ứng nổi nhẹ */
-}
-
-.lesson-content p {
     font-size: 16px;
-    color: #333;
-    line-height: 1.6;
-    /* Tăng khoảng cách dòng */
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.2, 1, 0.3, 1);
+    box-shadow: 0 6px 18px rgba(255, 112, 67, 0.25);
 }
 
-/* ===== Sidebar (Nội dung khóa học) ===== */
+.note-button:hover {
+    background: linear-gradient(130deg, #ff9e80, #ff7043);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(255, 112, 67, 0.35);
+}
+
+/* ===== Note Form ===== */
+#note-form {
+    display: none;
+    margin-top: 30px;
+    padding: 30px;
+    background: var(--bg-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.35s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#note-form textarea {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 16px;
+    resize: vertical;
+    background: #fafafa;
+    transition: all 0.3s ease;
+    min-height: 140px;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+#note-form textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(255, 112, 67, 0.15);
+    outline: none;
+}
+
+#note-form button {
+    width: 100%;
+    padding: 14px;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.2, 1, 0.3, 1);
+    box-shadow: 0 6px 18px rgba(255, 112, 67, 0.25);
+}
+
+#note-form button:hover {
+    background: linear-gradient(130deg, #ff9e80, #ff7043);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(255, 112, 67, 0.35);
+}
+
+/* ===== Note Display ===== */
+.note-display {
+    margin-top: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, #fff7f4, #ffeee9);
+    border-radius: 16px;
+    border-left: 5px solid var(--primary-color);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+}
+
+.note-display h3 {
+    color: var(--accent-color);
+    /* Dùng màu đặc thay gradient */
+    font-size: 19px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+}
+
+.note-display h3:hover {
+    color: var(--primary-color);
+    /* Đổi màu khi hover */
+}
+
+/* ===== Sidebar ===== */
 .sidebar {
     flex: 1;
-    background: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: var(--bg-white);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.35s cubic-bezier(0.2, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.sidebar:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
 }
 
 .sidebar h3 {
-    color: #ff6f00;
-    margin-bottom: 10px;
-    font-size: 20px;
+    color: var(--accent-color);
+    /* Dùng màu đặc thay gradient */
+    margin-bottom: 25px;
+    font-size: 26px;
+    font-weight: 800;
+    transition: color 0.3s ease;
+}
+
+.sidebar h3:hover {
+    color: var(--primary-color);
+    /* Đổi màu khi hover */
 }
 
 .lesson-list {
     list-style: none;
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 .lesson-list li {
-    padding: 10px;
-    border-radius: 5px;
-    transition: background 0.3s;
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    background: #f9fafb;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
-.lesson-list li.active,
-.lesson-list li:hover {
-    background: #ff6f00;
+.lesson-list li.active {
+    background: var(--gradient-primary);
     color: white;
-    font-weight: bold;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(255, 112, 67, 0.25);
+}
+
+.lesson-list li:hover {
+    background: linear-gradient(130deg, #ff9e80, #ff7043);
+    color: white;
+    transform: translateX(6px);
+    box-shadow: 0 8px 20px rgba(255, 112, 67, 0.3);
 }
 
 .lesson-list a {
     text-decoration: none;
     color: inherit;
     display: block;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
+        padding: 20px;
+        margin-top: 80px;
     }
 
-    .video-container {
-        height: 300px;
-    }
-}
-
-
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-        gap: 10px;
-        padding: 15px;
+    .main-content,
+    .sidebar {
+        width: 100%;
     }
 
     .video-container {
         height: auto;
-        /* Cho phép chiều cao tự điều chỉnh */
     }
 
-    .sidebar {
-        order: -1;
-        /* Đưa sidebar lên đầu trên mobile */
+    .lesson-content h2 {
+        font-size: 28px;
     }
+}
 
-    .lesson-list li {
-        text-align: center;
-    }
+/* ===== Scrollbar Styling ===== */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gradient-primary);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(255, 112, 67, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(130deg, #ff9e80, #ff7043);
 }

@@ -18,7 +18,7 @@ block main
                 each course in courses
                     a(href=`/course/detail/${course.id}`) 
                         div.course-card
-                            img(src="/img/course-1.png" alt=course.name)
+                            img(src=`${course.thumbnail}` alt=course.name)
                             h3= course.name
                             p 📚 #{course.lessons.length} Lesson 
                             p
