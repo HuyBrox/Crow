@@ -30,6 +30,7 @@ const UserSchema = new mongoose.Schema({
     nationality: {
         type: String,
         default: 'Vietnam',
+        enum: ['Vietnam', 'Japan', 'China', 'USA', 'England', 'Korea'], 
     },
     phone: {
         type: String,
@@ -45,6 +46,20 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    posts: {
+        type: Number,
+        default: 0,
+    },
+    likes: {
+        type: Number,
+        default: 0,
+    },
+    recentActivity: [
+        {
+            type: String,
+        }
+    ],
+    
 }, { timestamps: true });
 
 const User = mongoose.model('User', UserSchema);

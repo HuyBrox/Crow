@@ -2,10 +2,10 @@ import User from '../models/user.model.js';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { getReciverSocketIds, io } from "../socket/socket.js";
-import Post from '../models/post.model.js';
-import Comment from '../models/comment.model.js';
 // import getDatUri from "../utils/datauri.js";
 // import cloudinary from "../utils/cloudinary.js";
+import Course from '../models/course.model.js';
+
 
 // [GET] get register page
 export const getRegister = (req, res) => {
@@ -158,7 +158,12 @@ export const getHome = async (req, res) => {
     res.render('./page/home/home', {
         title: 'Trang chủ',
     });
+
+
+
+
 };
+
 //profile
 export const getprofile = (req, res) => {
     res.render('./page/profile/profile', {
@@ -244,3 +249,27 @@ export const getListUser = async (req, res) => {
         res.status(500).send('Server error');
     }
 };
+
+export const getProfile = async (req, res) => {
+    try {
+        const user = res.locals.user;
+        const courses = await Course.find();
+
+        if (!user) {
+            req.flash('error', 'Người dùng không tồn tại!');
+            return res.redirect('/');
+        }
+
+        res.render('./page/profile/index', {
+            title: 'Trang cá nhân',
+            user: user,
+            courses: courses ,
+        });
+        console.log('courses:', courses);
+    } catch (error) {
+        console.error('Error:', error);
+        req.flash('error', 'Đã xảy ra lỗi!');
+        res.redirect('/');
+    }
+}
+
