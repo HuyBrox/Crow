@@ -232,10 +232,6 @@ h1 button {
   transition: all 0.3s ease;
 }
 
-.add-container.show {
-  opacity: 1;
-  z-index: 2;
-}
 
 .add-container h3 {
   margin: 0.625rem 0;
@@ -459,4 +455,62 @@ h1 button {
   right: 20px;
   width: 140px;
   background-image: linear-gradient(90deg, #4696ff 0%, #a6cdff 100%);
+}
+/* css choice ẩn */
+.choise-container {
+  position: absolute;
+  margin: auto;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  max-height: 180px;
+  display: flex;
+  align-items: center;
+  background-image: linear-gradient(90deg, #4696ff 0%, #a6cdff 100%);
+  justify-content: space-evenly;
+  border-radius: 25px 0 25px 25px;
+  border: none;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+  flex-direction: row-reverse;
+  /* ẩn */
+  opacity: 0;
+  z-index: -1;
+}
+.closex {
+  position: absolute;
+  top: -10px;
+  right: 0;
+  font-size: 15px;
+  cursor: pointer;
+  background-color: rgba(255, 253, 253, 0.726);
+  border-radius: 99999999px;
+  border: none;
+  padding: 2px;
+  width: 30px;
+  height: 30px;
+  transform: translateY(-100%);
+  transform: translateX(50%);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.closex:hover {
+  background-color: rgb(255, 253, 253);
+  font-weight: 550;
+  font-size: 16px;
+  color: rgb(255, 82, 82);
+}
+.choise-container .btn-custom {
+  width: 150px;
+  height: 40px;
+}
+.show {
+  opacity: 1;
+  z-index: 2;
 }

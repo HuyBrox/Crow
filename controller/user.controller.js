@@ -5,6 +5,7 @@ import { getReciverSocketIds, io } from "../socket/socket.js";
 // import getDatUri from "../utils/datauri.js";
 // import cloudinary from "../utils/cloudinary.js";
 import Course from '../models/course.model.js';
+import multer from 'multer';
 
 
 // [GET] get register page
@@ -270,6 +271,82 @@ export const getProfile = async (req, res) => {
         console.error('Error:', error);
         req.flash('error', 'Đã xảy ra lỗi!');
         res.redirect('/');
+    }
+};
+
+//API get edit profile
+export const getEditProfile = async (req, res) => {
+    try {
+      const user = res.locals.user;
+      console.log('Người dùng:', user); // Log để debug
+  
+      if (!user) {
+        req.flash('error', 'Người dùng không tồn tại!');
+        return res.redirect('/');
+      }
+  
+      res.render('page/profile/edit', {
+        title: 'Chỉnh sửa thông tin cá nhân',
+        user: user,
+      });
+    } catch (error) {
+      console.error('Lỗi:', error);
+      req.flash('error', 'Đã xảy ra lỗi!');
+      res.redirect('/');
+    }
+  };
+
+  //API post edit profile
+  import { uploadImage } from '../helper/upload-media.js';
+  export const editProfile = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const currentUser = res.locals.user;
+
+        if (userId !== currentUser._id.toString()) {
+            req.flash('error', 'Bạn không có quyền chỉnh sửa hồ sơ này!');
+            return res.redirect('/profile');
+        }
+
+        const { fullname,  email, nationality } = req.body;
+        let avatar = currentUser.avatar;
+        const file = req.file;
+
+        if (file) {
+            const newAvt = await uploadImage(file);
+            avatar = newAvt;
+        }
+
+        const updatedFullname = fullname || currentUser.fullname;
+        const updatedNationality = nationality || 'Vietnam';
+
+
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { 
+                fullname: updatedFullname, 
+                email, 
+                nationality: updatedNationality, 
+                avatar 
+            }
+        );
+
+        if (!updatedUser) {
+            req.flash('error', 'Không thể cập nhật hồ sơ!');
+            return res.redirect(`/profile/edit/${userId}`);
+        }
+
+        req.flash('success', 'Cập nhật hồ sơ thành công!');
+        res.redirect('/profile');
+    } catch (error) {
+        console.error('Lỗi chi tiết:', error.name, error.message);
+        if (error.code === 11000) {
+            req.flash('error', 'Tên người dùng hoặc email đã được sử dụng!');
+        } else {
+            req.flash('error', 'Đã xảy ra lỗi khi cập nhật hồ sơ!');
+        }
+        res.redirect(`/profile/edit/${userId}`);
     }
 };
 

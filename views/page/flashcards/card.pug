@@ -54,9 +54,19 @@ block main
             button#add-card.btn.btn-margin.btn-custom
                 i.fas.fa-plus.mr-2
                 |  Th&ecirc;m th&#x1EBB;
-        a#learn.btn.btn-custom(href='/AI-gen-quiz/' + flashCard._id)
+        button#learn.btn.btn-custom
             i.fas.fa-graduation-cap.mr-2
             |  Bài tập - (AI Gennarate)
+        .choise-container#choise-container
+            a#AI-gen-exercise.btn.btn-custom(href='/review/' + flashCard._id)
+                i.fas.fa-graduation-cap.mr-2
+                |  Bài tập điền từ
+            a#AI-gen-quiz.btn.btn-custom(href='/AI-gen-quiz/' + flashCard._id)
+                i.fas.fa-graduation-cap.mr-2
+                |  Bài tập trắc nghiệm
+            button#closex.closex
+                i.fas.fa-times
+
 
 block script2
     script(src="/js/flashcard/index.js" type="module")

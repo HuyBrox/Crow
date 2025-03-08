@@ -27,5 +27,84 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// chuc nang chinh sua
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('profile.js loaded');
 
+    const editProfileBtn = document.getElementById('editProfileBtn');
+    const editProfileSection = document.querySelector('.edit-profile');
+    const overlay = document.querySelector('.overlay');
+    const editProfileForm = document.getElementById('editProfileForm');
+    const saveButton = document.getElementById('saveProfile');         
+    const cancelButton = document.getElementById('cancelProfile');
+
+    if (editProfileBtn) {
+        console.log('Edit button found');
+        editProfileBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Edit button clicked');
+            if (editProfileSection && overlay) {
+                editProfileSection.classList.add('active');
+                overlay.classList.add('active');
+            } else {
+                console.log('Popup or overlay not found:', { editProfileSection, overlay });
+            }
+        });
+    } else {
+        console.log('Edit button not found');
+    }
+
+    if (saveButton) {
+        saveButton.addEventListener('click', async (e) => {
+            e.preventDefault();
+            console.log('Save button clicked');
+
+            const formData = new FormData(editProfileForm);
+            const userInput = document.getElementById('user');
+            let userId = null
+            if (userInput) {
+                const user = JSON.parse(userInput.value);
+                userId = user._id;
+            }
+
+            try {
+                const response = await fetch(`/profile/edit/${userId}`, {
+                    method: 'PATCH',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    alert('Cập nhật profile thành công!');
+                    window.location.reload();
+                } else {
+                    const error = await response.json();
+                    alert(`Lỗi: ${error.message}`);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                alert('Có lỗi xảy ra, vui lòng thử lại!');
+            }
+        });
+    }
+
+    if (cancelButton) {
+        cancelButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Cancel button clicked');
+            if (editProfileSection && overlay) {
+                editProfileSection.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        });
+    }
+
+    // Đóng popup khi click ngoài (vào overlay)
+    if (overlay) {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                editProfileSection.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        });
+    }
+});
