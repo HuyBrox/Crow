@@ -1,5 +1,5 @@
 import express from 'express';
-import { coursePage, courseDetailPage, lessonDetailPage, createCourse, addLessonVideo, deleteLesson, deleteCourse, saveLessonNote } from '../controller/course.controller.js';
+import { coursePage, courseDetailPage, lessonDetailPage, createCourse, addLessonVideo, deleteLesson, deleteCourse, createLessonTask, saveLessonNote } from '../controller/course.controller.js';
 import { auth, requireAuth } from '../middleware/auth.js';
 // import upload from '../middleware/multer.js';
 import multer from 'multer';
@@ -18,5 +18,6 @@ router.post('/course/addLessonVideo', upload.single('videoUrl'), addLessonVideo)
 router.delete('/course/detail/:courseId', deleteCourse);
 // Thêm tuyến xóa bài học
 router.delete('/course/:courseId/lesson/:lessonId', deleteLesson);
+router.post('/course/createLessonTask', createLessonTask);
 router.post('/course/:courseId/lesson/:lessonId/note', requireAuth, saveLessonNote);
 export default router;

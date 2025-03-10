@@ -38,7 +38,43 @@ block main
         .lesson-content
           h2#lesson-title= lesson.title
           p#lesson-description= lesson.content
-      else if lesson.type === "task" && lesson.jsonTask
+      else if lesson.type === 'task'
+        .task-container
+          input#sheetName(type="hidden" value=lesson.jsonTask)
+          .quiz_wrapper
+            .quiz_header
+              .quiz_timer
+                i.fa-regular.fa-clock
+                .quiz_timer_text
+                  span Time remaining
+                  p#timer 15:00
+              button#quiz_submit SUBMIT
+            .quiz_container
+              .quiz_question
+                h5 Question 1 of 10
+                p#quiz_title
+                ul
+                  li
+                    span A.
+                    span.quiz_answer_item
+                  li
+                    span B.
+                    span.quiz_answer_item
+                  li
+                    span C.
+                    span.quiz_answer_item
+                  li
+                    span D.
+                    span.quiz_answer_item
+              .quiz_progress
+                svg
+                  circle(r='50')
+                  circle#progress(r='50')
+                span#progress_text 0/10
+            .quiz_numbers
+              button#quiz_prev Prev
+              ul
+              button#quiz_next Next
         .lesson-content
           h2#lesson-title= lesson.title
           p#lesson-description= lesson.content
@@ -90,7 +126,8 @@ block script
               console.error('note-btn or note-form not found!');
           }
       });
-
+block script2
+  script(src="/js/lesson.js")
       
 
 

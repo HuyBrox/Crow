@@ -14,9 +14,9 @@ const lessonSchema = new mongoose.Schema({
         required: true,
     },
     jsonTask: {
-        type: String,
-    }
-    ,
+        type: mongoose.Schema.Types.Mixed, //JSON
+        default: null,
+    },
     videoUrl: {
         type: String,
     },
