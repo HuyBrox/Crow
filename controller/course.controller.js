@@ -230,7 +230,7 @@ export const deleteCourse = async (req, res) => {
         const { courseId } = req.params;
 
         // Tìm và xóa khóa học
-        const course = await Course.findById(courseId);
+        const course = await Course.findByIdAndDelete(courseId);
 
 
         if (!course) {

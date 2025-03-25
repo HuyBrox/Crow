@@ -31,7 +31,7 @@ const CourseSchema = new mongoose.Schema({
     //lessons là mảng chứa các bài học
     lessons: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.Mixed,
             ref: 'Lesson',
         },
     ],
